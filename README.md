@@ -2,6 +2,9 @@
 An experimental x86_64 hobby OS project.
 &nbsp;  
 &nbsp;  
+&nbsp;  
+
+[![FuzeOS Kernel CI](https://github.com/Sayan505/FuzeOS/actions/workflows/test_knl.yml/badge.svg)](https://github.com/Sayan505/FuzeOS/actions/workflows/test_knl.yml)
 
 &nbsp;
 ## Road Map
