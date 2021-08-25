@@ -33,6 +33,9 @@ start:
 
     k_putstr("MEOWWWWM!\n\r");
 
+
+    
+
     __asm__ volatile("cli");
     for(;;) { __asm__ volatile("hlt"); }    // end of kernel
 }
