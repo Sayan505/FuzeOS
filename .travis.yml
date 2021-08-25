@@ -16,4 +16,7 @@ before_install:
 
 script: make ci_knl
 
-after_script: make clean_ci_knl
+after_script: |
+              sudo apt-get install nasm
+              make clean_ci_knl
+
