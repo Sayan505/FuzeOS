@@ -10,4 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check Build
-      run:  make ci_knl
+      run:  |
+            sudo apt install nasm
+            make ci_knl
