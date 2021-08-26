@@ -2,7 +2,7 @@
 
 
 // GDT
-extern void LOAD_GDT64();
+extern void LOAD_GDT64();   // kernel/sys/gdt/gdt64.asm
 
 // data types
 #include <lib/stdtypes.h>

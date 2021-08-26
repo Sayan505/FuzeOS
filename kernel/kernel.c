@@ -8,8 +8,9 @@
 
 __attribute__ ((noreturn))
 void start_kernel(stiletto_t *stiletto) {
-    LOAD_GDT64(&&start);    // supply return address in rdi (https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html)
-start:
+    // init gdt
+    LOAD_GDT64();    // supply return address in rdi (https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html)
+
     // get the segments right
     __asm__ volatile("mov $0x10, %ax");
     

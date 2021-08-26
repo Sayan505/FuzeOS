@@ -1,3 +1,6 @@
+; https://wiki.osdev.org/Global_Descriptor_Table
+
+
 section .data
 
 global GDT64
@@ -10,7 +13,7 @@ GDT64:
     dw 0
     dw 0
     db 0
-    db 10011010b
+    db 10011010b    ; Privl = ring 0 (00)
     db 00100000b
     db 0
     .Data: equ $ - GDT64
@@ -30,7 +33,11 @@ GDT_PTR:
 
 ; lgdt
 LOAD_GDT64:
-    lgdt[GDT_PTR]
+    pop rdi ; save return addr (sysv_abi)
+
+
+    lgdt[GDT_PTR]   ; load GDT
+
 
     ; prep for iretq
     mov rax, rsp
@@ -38,5 +45,6 @@ LOAD_GDT64:
     push rax    ; rsp
     pushf       ; rflags
     push 0x8    ; cs
-    push rdi    ; rip (return addr = first arg.; sysv_abi)
+    push rdi    ; rip (set return addr)
+    
     iretq

@@ -14,8 +14,8 @@ An experimental x86_64 hobby OS project.
 💚: Completed.  
 &nbsp;
 ### Progress:
-💚 Boot Protocol. (Stiletto)  
-💚 UEFI Booting (FuzeBoot; ELF64 kernel).  
+💚 Boot Protocol.  
+💚 UEFI Booting (ELF64 kernel).  
 💚 Serial Port.  
 💚 GDT.  
 💙 Re-configure Paging.  
