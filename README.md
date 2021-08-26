@@ -45,24 +45,29 @@ And, so on...
 ## Build Fuze
 ### &nbsp; Get the source
 &nbsp; &nbsp; `git clone` to test the kernel with the pre-build bootloader or,  
-&nbsp; &nbsp; `git clone --recursive` during cloning to fetch this repo and EDK2 + all its submodules or,   
-&nbsp; &nbsp; `make init_submodules`, which is `git submodule update --init --recursive` after `git clone` to get EDK2 and its submodules.
+&nbsp; &nbsp; `make init edk2` after cloning to fetch EDK2 + all its submodules.  
+&nbsp; &nbsp; `make delete edk2` to remove the edk2 folder after working.
+&nbsp;  
+
 ### &nbsp; Requirements
 * clang (for Kernel)
-* GCC (build-essential; for the FuzeBoot Bootloader)
+* GCC (for the Bootloader)
 * GNU LD
 * nasm
 * GNU Parted
 * dosfstools
-* EDK II (optional; binary included, to build the FuzeBoot bootloader)
+* EDK II (optional; binary included, to build the bootloader)
+&nbsp;  
 
 ### &nbsp; Process
 &nbsp; Build full system with disk images (losetup requires root):  
 &nbsp; &nbsp; `make`  
-&nbsp; Build full system in $(FSDIR) without generating disk images:  
-&nbsp; &nbsp; `make testall`  
-&nbsp; Build to test the kernel only, in $(FSDIR) without generating disk images:  
-&nbsp; &nbsp; `make test`, requires `make bootloader`, once.
+  
+&nbsp; Build full system in `$(FSDIR)` without generating disk images:  
+&nbsp; &nbsp; `make testbuildall`  
+  
+&nbsp; Build the kernel only, in `$(FSDIR)` without generating disk images and use the pre-built bootloader:  
+&nbsp; &nbsp; `make testbuild`. Then do `make img` to generate a disk image. This is what you should use to test the system out.
 
 &nbsp;
 
@@ -77,7 +82,7 @@ And, so on...
 ## Build FuzeBoot UEFI bootloader
 ### &nbsp; Requirements
 * Atleast GCC5 (build-essential)
-* uuid-dev / libuuid-devel
+* uuid-dev / uuid-devel
 * iasl
 * nasm
 * python3-distutils
