@@ -17,7 +17,7 @@ extern void LOAD_GDT64();   // kernel/sys/gdt/gdt64.asm
 
 
 // video
-#include <sys/video/init.h>
+#include <sys/video/init.h>     // internal init code
 #include <lib/video.h>
 
 

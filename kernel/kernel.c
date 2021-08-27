@@ -6,7 +6,7 @@
 #include <kernel.h>
 
 
-__attribute__ ((noreturn))
+__attribute__ ((sysv_abi))
 void start_kernel(stiletto_t *stiletto) {
     // init gdt
     LOAD_GDT64();    // supply return address in rdi (https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html)
@@ -38,7 +38,7 @@ void start_kernel(stiletto_t *stiletto) {
     
 
     __asm__ volatile("cli");
-    for(;;) { __asm__ volatile("hlt"); }    // end of kernel
+    __asm__ volatile("hlt");   // halt cpu
 }
 
 //sudo dd if=OS.img of=/dev/sdc bs=1M count=64 oflag=sync
