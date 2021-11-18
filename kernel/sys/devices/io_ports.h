@@ -17,14 +17,14 @@
 #define BAUD_38400  (0x03)
 
 
-static inline VOID outb(UI16 port, BYTE datb) {
+static inline VOID outb(UINT16 port, BYTE datb) {
     __asm__ volatile ("outb %0, %1"
                       :
                       : "a"(datb), "Nd"(port)
                      );
 }
 
-static inline BYTE inb(UI16 port) {
+static inline BYTE inb(UINT16 port) {
     BYTE datb;
 
     __asm__ volatile ("inb %1, %0"

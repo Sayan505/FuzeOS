@@ -9,7 +9,7 @@
 __attribute__ ((sysv_abi))
 void start_kernel(stiletto_t *stiletto) {
     // init gdt
-    LOAD_GDT64();    // supply return address in rdi (https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html)
+    LOAD_GDT64();
 
     // get the segments right
     __asm__ volatile("mov $0x10, %ax");
@@ -32,7 +32,7 @@ void start_kernel(stiletto_t *stiletto) {
 
     clr_scr();
 
-    k_putstr("MEOWWWWM!\n\r");
+    k_putstr("Ready!\n\r");
 
 
     

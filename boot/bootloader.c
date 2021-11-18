@@ -131,7 +131,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     UINTN efi_mem_map_sz, efi_mem_map_key, efi_desc_sz;
     UINT32 efi_desc_ver;
 
-    gBS->GetMemoryMap(&efi_mem_map_sz, efi_mem_map, NULL, &efi_desc_sz, NULL); // get pool size
+    gBS->GetMemoryMap(&efi_mem_map_sz, efi_mem_map, NULL, &efi_desc_sz, NULL); // get required pool size for memory map
 
     efi_mem_map_sz += 2 * efi_desc_sz;  // adjust with new descriptors created after AllocatePool
 

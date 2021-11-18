@@ -2,13 +2,13 @@
 #include <sys/devices/serial/serial.h>
 
 
-VOID set_baud(UI16 port, BYTE baud_rate) {
+VOID set_baud(UINT16 port, BYTE baud_rate) {
     outb(port + 0, baud_rate);
     outb(port + 1, 0x00);
 }
 
 
-VOID init_serial(UI16 port) {
+VOID init_serial(UINT16 port) {
     outb(port + 1, 0x00);
     outb(port + 3, 0x80);
 
@@ -19,28 +19,28 @@ VOID init_serial(UI16 port) {
     outb(port + 4, 0x0B);
 }
 
-UI32 is_serial_bus_clear(UI16 port) {
+UINT32 is_serial_bus_clear(UINT16 port) {
     return inb(port + 5) & 0x20;
 }
 
-VOID serial_char_out(UI16 port, char datb) {
+VOID serial_char_out(UINT16 port, char datb) {
     while (is_serial_bus_clear(port) == 0);
 
     outb(port, datb);
 }
 
-UI32 is_serial_recv(UI16 port) {
+UINT32 is_serial_recv(UINT16 port) {
     return inb(port + 5) & 1;
 }
 
-BYTE serial_char_in(UI16 port) {
+BYTE serial_char_in(UINT16 port) {
     while(is_serial_recv(port) == 0);
 
     return inb(port);
 }
 
 
-VOID serial_str_out(UI16 port, char* strb) {
+VOID serial_str_out(UINT16 port, char* strb) {
     int i = 0;
 
     while(*(strb + i)) {

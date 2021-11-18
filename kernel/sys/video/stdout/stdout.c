@@ -3,8 +3,8 @@
 
 
 VOID k_putchr(const CHAR _char) {
-    static I32 posi_x = char_width;
-    static I32 posi_y = char_height;
+    static INT32 posi_x = char_width;
+    static INT32 posi_y = char_height;
 
     // CR
     if (_char == '\r') {
@@ -19,8 +19,8 @@ VOID k_putchr(const CHAR _char) {
         return;
     }
 
-    I32 cx, cy;
-    I32 mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+    INT32 cx, cy;
+    INT32 mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
     BYTE* glyph = FONT + _char * 16ULL;
 
     for (cy = 0; cy < 16; ++cy) {
@@ -43,9 +43,9 @@ VOID k_putstr(const CHAR* _str) {
 
 
 // overloads
-void k_putchr_rgb(const CHAR _char, UI32 _color) {
-    static I32 posi_x = char_width;
-    static I32 posi_y = char_height;
+void k_putchr_rgb(const CHAR _char, UINT32 _color) {
+    static INT32 posi_x = char_width;
+    static INT32 posi_y = char_height;
 
     // CR
     if (_char == '\r') {
@@ -60,8 +60,8 @@ void k_putchr_rgb(const CHAR _char, UI32 _color) {
         return;
     }
 
-    I32 cx, cy;
-    I32 mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+    INT32 cx, cy;
+    INT32 mask[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
     BYTE* glyph = FONT + _char * 16ULL;
 
     for (cy = 0; cy < 16; ++cy) {
@@ -74,7 +74,7 @@ void k_putchr_rgb(const CHAR _char, UI32 _color) {
     posi_x += 8;
 }
 
-void k_putstr_rgb(const CHAR* _str, UI32 _color) {
+void k_putstr_rgb(const CHAR* _str, UINT32 _color) {
     while (*_str != '\0') {
         k_putchr_rgb(*_str, _color);
 
