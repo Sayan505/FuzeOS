@@ -15,7 +15,7 @@ VOID set_baud(UINT16 port, BYTE baud_rate);
 // serial in
 UINT32 is_serial_bus_clear(UINT16 port);
 VOID serial_char_out(UINT16 port, char  datb);
-VOID serial_str_out(UINT16 port,  char* strb);
+VOID serial_str_out(UINT16 port,  const char* strb);
 
 // serial out
 UINT32 is_serial_recv(UINT16 port);

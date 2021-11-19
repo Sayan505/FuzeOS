@@ -23,3 +23,7 @@ extern void LOAD_GDT64();   // kernel/sys/gdt/gdt64.asm
 
 // stdout
 #include <lib/stdout.h>
+
+
+// memory
+#include <sys/mem/mem.h>

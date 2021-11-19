@@ -40,7 +40,7 @@ BYTE serial_char_in(UINT16 port) {
 }
 
 
-VOID serial_str_out(UINT16 port, char* strb) {
+VOID serial_str_out(UINT16 port, const char* strb) {
     int i = 0;
 
     while(*(strb + i)) {
@@ -61,7 +61,7 @@ VOID com1_outb(char __datb__) {
     serial_char_out(COM1, __datb__);
 }
 
-VOID com1_outs(char* __strb__) {
+VOID com1_outs(const char* __strb__) {
     serial_str_out(COM1, __strb__);
 }
 

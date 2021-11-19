@@ -24,18 +24,22 @@ void start_kernel(stiletto_t *stiletto) {
     // init serial
     init_com1();
 
-    com1_outs("OK");
+    com1_outs("Initialized Serial (COM1)\n");
 
 
     // init video
     init_video(stiletto->stiletto_video);
+
+    // init memory
+    init_memory(stiletto->stiletto_memory);
+
 
     clr_scr();
 
     k_putstr("Ready!\n\r");
 
 
-    
+
 
     __asm__ volatile("cli");
     __asm__ volatile("hlt");   // halt cpu

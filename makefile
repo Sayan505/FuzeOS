@@ -107,6 +107,7 @@ CFLAGS = -target x86_64-unknown-none-elf64 	\
 		 -std=c17							\
 		 -Wall								\
 		 -Wextra							\
+		 -Werror                            \
 		 -Wpedantic							\
 		 -Wno-gnu-label-as-value			\
 		 -ffreestanding						\

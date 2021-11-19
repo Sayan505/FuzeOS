@@ -126,7 +126,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     Print(L"[Y]\tKERNEL LOADED!\n");
 
 
-    // fetch EFI Memory Map
+    // fetching EFI Memory Map
     EFI_MEMORY_DESCRIPTOR *efi_mem_map = NULL;
     UINTN efi_mem_map_sz, efi_mem_map_key, efi_desc_sz;
     UINT32 efi_desc_ver;
@@ -141,6 +141,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
         for(;;) { __asm__ volatile("hlt"); }
     }
 
+    // get the actual memory map
     efi_status = gBS->GetMemoryMap(&efi_mem_map_sz, efi_mem_map, &efi_mem_map_key, &efi_desc_sz, &efi_desc_ver);
     if(EFI_ERROR(efi_status)) {
         Print(L"\n[X]\tError Fetching EFI Memory Map");
@@ -158,7 +159,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
     
     // READY!
-    ((__attribute__ ((sysv_abi)) void(*)(stiletto_t *))pImage_entry)(&stiletto);
+    ((__attribute__ ((sysv_abi)) void(*)(stiletto_t *))pImage_entry)(&stiletto);    // jump to kernel!
 
     return EFI_SUCCESS;
 }
