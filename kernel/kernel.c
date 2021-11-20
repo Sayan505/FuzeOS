@@ -36,7 +36,7 @@ void start_kernel(stiletto_t *stiletto) {
 
     clr_scr();
 
-    k_putstr("Ready!\n\r");
+    k_putstr("READY!\n\r");
 
 
 

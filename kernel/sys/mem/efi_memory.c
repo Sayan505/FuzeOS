@@ -27,8 +27,6 @@ const char* to_string(uint64_t value){
 }
 
 
-// BUG:
-// MEMORY SHOWING UP MORE THAN WHAT WAS ALLOCATED.
 UINT64 get_phys_memory_size(stiletto_memory_t stiletto_memory) {
     UINT64 num_entries;
     
@@ -44,10 +42,13 @@ UINT64 get_phys_memory_size(stiletto_memory_t stiletto_memory) {
 
     //
 
+    // BUG:
+    // MEMORY SHOWING UP MORE THAN WHAT WAS ALLOCATED.
+    com1_outs("Total Physical Memory: ");
     com1_outs(to_string(phys_memory_size));
+    com1_outs(" Bytes\n");
 
     //
 
     return phys_memory_size;
 }
-

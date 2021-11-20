@@ -14,7 +14,7 @@ VOID k_putchr(const CHAR _char) {
     }
     // LF
     if (_char == '\n') {
-        posi_y += 12;
+        posi_y += 16;
 
         return;
     }
@@ -30,7 +30,7 @@ VOID k_putchr(const CHAR _char) {
     }
 
     // next posi
-    posi_x += 8;
+    posi_x += 9;
 }
 
 VOID k_putstr(const CHAR* _str) {
@@ -55,7 +55,7 @@ void k_putchr_rgb(const CHAR _char, UINT32 _color) {
     }
     // LF
     if (_char == '\n') {
-        posi_y += 12;
+        posi_y += 16;
 
         return;
     }
@@ -71,7 +71,7 @@ void k_putchr_rgb(const CHAR _char, UINT32 _color) {
     }
 
     // next posi
-    posi_x += 8;
+    posi_x += 9;
 }
 
 void k_putstr_rgb(const CHAR* _str, UINT32 _color) {
