@@ -82,7 +82,7 @@ And, so on...
 ## Build FuzeBoot UEFI bootloader
 ### &nbsp; Requirements
 * Atleast GCC5 (build-essential)
-* uuid-dev / uuid-devel
+* libuuid-devel
 * iasl
 * nasm
 * python3-distutils

@@ -2,10 +2,10 @@
 #include <sys/video/stdout/stdout.h>
 
 
-VOID k_putchr(const CHAR _char) {
-    static INT32 posi_x = char_width;
-    static INT32 posi_y = char_height;
+static INT32 posi_x = char_width;
+static INT32 posi_y = char_height;
 
+VOID k_putchr(const CHAR _char) {
     // CR
     if (_char == '\r') {
         posi_x = 8;
@@ -15,6 +15,12 @@ VOID k_putchr(const CHAR _char) {
     // LF
     if (_char == '\n') {
         posi_y += 16;
+
+        return;
+    }
+    // TAB
+    if (_char == '\t') {
+        posi_x += (16 * 4);
 
         return;
     }
@@ -44,9 +50,6 @@ VOID k_putstr(const CHAR* _str) {
 
 // overloads
 void k_putchr_rgb(const CHAR _char, UINT32 _color) {
-    static INT32 posi_x = char_width;
-    static INT32 posi_y = char_height;
-
     // CR
     if (_char == '\r') {
         posi_x = 8;
@@ -56,6 +59,12 @@ void k_putchr_rgb(const CHAR _char, UINT32 _color) {
     // LF
     if (_char == '\n') {
         posi_y += 16;
+
+        return;
+    }
+    // TAB
+    if (_char == '\t') {
+        posi_x += (16 * 4);
 
         return;
     }

@@ -159,6 +159,7 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
 			   -device VGA,vgamem_mb=64		\
 			   fat:rw:$(FSDIR)/  			\
 			   -m $(RAM)					\
+			   -display sdl                 \
 			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=1,sockets=1
 
 # /dev/loop???:

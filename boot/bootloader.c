@@ -19,17 +19,19 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     UINTN szEFI_gfx_mode_info;
     UINT32 MaxMode = efi_gfx->Mode->MaxMode;
 
+    // capture and set a target video mode
     for(int i = 0; i < MaxMode; ++i) {
         efi_gfx->QueryMode(efi_gfx, i, &szEFI_gfx_mode_info, &efi_gfx_mode_info);    // query
-        if(efi_gfx_mode_info->HorizontalResolution == 1920 && efi_gfx_mode_info->VerticalResolution == 1080) {
+
+        if(efi_gfx_mode_info->HorizontalResolution == 1280 && efi_gfx_mode_info->VerticalResolution == 720) {
             //found the prefered mode
             efi_gfx->SetMode(efi_gfx, i);   // set it
             break;
         }
     }
-    
     // else, use the initial mode
-    Print(L"%d: %dx%d\t", efi_gfx->Mode->Mode, efi_gfx_mode_info->HorizontalResolution, efi_gfx_mode_info->VerticalResolution);   // display
+
+    Print(L"\n%d: %dx%d\n", efi_gfx->Mode->Mode, efi_gfx_mode_info->HorizontalResolution, efi_gfx_mode_info->VerticalResolution);   // display
 
     // store it
     stiletto.stiletto_video.pFrame_buffer_base = (uint32_t *)efi_gfx->Mode->FrameBufferBase;
@@ -123,7 +125,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
     gBS->FreePages(image_pool, EFI_SIZE_TO_PAGES(image_size));  // free the buffer
 
-    Print(L"[Y]\tKERNEL LOADED!\n");
+    Print(L"\n[Y]\tKERNEL LOADED!\n");
 
 
     // fetching EFI Memory Map
@@ -148,14 +150,27 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
         for(;;) { __asm__ volatile("hlt"); }
     }
 
+    // calculate total memory
+    UINT64 num_entries = efi_mem_map_sz / efi_desc_sz;
+    UINT64 phys_memory_size = 0;
+
+    for(UINT32 i = 0; i < num_entries; ++i) {
+        EFI_MEMORY_DESCRIPTOR *efi_memory_descriptor = (EFI_MEMORY_DESCRIPTOR *)((UINT64)efi_mem_map+ (i * efi_desc_sz));
+        phys_memory_size += efi_memory_descriptor->NumberOfPages * 4096;
+    }
+
+    Print(L"\n%llu Bytes of Memory\n", phys_memory_size); // display memory size
+
     // store it
-    stiletto.stiletto_memory.pMem_map = efi_mem_map;
-    stiletto.stiletto_memory.map_sz   = efi_mem_map_sz;
-    stiletto.stiletto_memory.desc_sz  = efi_desc_sz;
+    stiletto.stiletto_memory.pMem_map             = efi_mem_map;
+    stiletto.stiletto_memory.map_sz               = efi_mem_map_sz;
+    stiletto.stiletto_memory.desc_sz              = efi_desc_sz;
+    stiletto.stiletto_memory.total_phys_mem_bytes = phys_memory_size;
     
     
     // ExitBootServices()
     gBS->ExitBootServices(ImageHandle, efi_mem_map_key);
+    Print(L"\n[Y]\tExitBootServices()\n\n");
 
     
     // READY!

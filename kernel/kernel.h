@@ -27,3 +27,10 @@ extern void LOAD_GDT64();   // kernel/sys/gdt/gdt64.asm
 
 // memory
 #include <sys/mem/mem.h>
+
+// CPU
+#include <lib/cpuid.h>
+
+
+// welcome screen
+void welcome_screen();

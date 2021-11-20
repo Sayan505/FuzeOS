@@ -16,12 +16,14 @@ typedef unsigned long int      uint64_t;    // for compat
 
 // byte (8-bits)
 typedef unsigned char BYTE;
+typedef unsigned char UCHAR;
 typedef unsigned char UINT8;
 
 typedef signed   char INT8;
 typedef signed   char SBYTE;    // signed byte
 
 typedef char          CHAR;
+typedef char          SCHAR;
 
 typedef unsigned char uint8_t;
 
@@ -46,3 +48,6 @@ typedef unsigned int uint32_t;    // for compat
 
 // void
 typedef void VOID;
+
+// NULL
+#define NULL ('\0')
