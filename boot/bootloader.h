@@ -12,6 +12,7 @@
 #include <Library/UefiLib.h>
 #include <Library/BaseMemoryLib.h>
 #include <Library/UefiBootServicesTableLib.h>
+#include <IndustryStandard/SmBios.h>
 
 #include "types.h"
 #include "protocol/stiletto.h"
