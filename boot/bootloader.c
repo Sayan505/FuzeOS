@@ -152,20 +152,20 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
     // calculate total memory
     UINT64 num_entries = efi_mem_map_sz / efi_desc_sz;
-    UINT64 phys_memory_size = 0;
+    UINT64 memory_size = 0;
 
     for(UINT32 i = 0; i < num_entries; ++i) {
-        EFI_MEMORY_DESCRIPTOR *efi_memory_descriptor = (EFI_MEMORY_DESCRIPTOR *)((UINT64)efi_mem_map+ (i * efi_desc_sz));
-        phys_memory_size += efi_memory_descriptor->NumberOfPages * 4096;
+        EFI_MEMORY_DESCRIPTOR *efi_memory_descriptor = (EFI_MEMORY_DESCRIPTOR *)((UINT64)efi_mem_map + (i * efi_desc_sz));
+        memory_size += efi_memory_descriptor->NumberOfPages * 4096;
     }
 
-    Print(L"\n%llu Bytes of Memory\n", phys_memory_size); // display memory size
+    Print(L"\n%llu Bytes of Memory\n", memory_size); // display memory size
 
     // store it
     stiletto.stiletto_memory.pMem_map             = efi_mem_map;
     stiletto.stiletto_memory.map_sz               = efi_mem_map_sz;
     stiletto.stiletto_memory.desc_sz              = efi_desc_sz;
-    stiletto.stiletto_memory.total_phys_mem_bytes = phys_memory_size;
+    stiletto.stiletto_memory.total_mem_bytes      = memory_size;
     
     
     // ExitBootServices()
