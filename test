@@ -1,1 +1,1 @@
-(clear && make clean && (make testbuild || exit)) && ((read -n 1 -s -r -p "Build successful!... Press any key to continue.") && (make testrun && clear))
+(clear && make clean && (make testbuildall || exit)) && ((read -n 1 -s -r -p "Build successful!... Press any key to continue.") && (make testrun && clear))

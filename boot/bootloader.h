@@ -5,6 +5,7 @@
 
 #include <Uefi.h>
 #include <Guid/Acpi.h>
+#include <Guid/SmBios.h>
 #include <Guid/FileInfo.h>
 #include <Protocol/GraphicsOutput.h>
 #include <Protocol/SimpleFileSystem.h>

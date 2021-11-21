@@ -57,6 +57,23 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     stiletto.stiletto_acpi.acpi_rsdp = rsdp;    // store RSDP
 
 
+    // get SMBIOS entry point
+    VOID *smbios_table_entry_point = NULL;
+    EFI_GUID efi_smbios_guid = SMBIOS_TABLE_GUID;
+
+    for(UINTN i = 0; i < SystemTable->NumberOfTableEntries; ++i) {
+        EFI_CONFIGURATION_TABLE *efi_cfg = &SystemTable->ConfigurationTable[i]; // go through all tables
+        if(CompareGuid(&efi_cfg->VendorGuid, &efi_smbios_guid)) {
+            Print(L"\n[Y]\tSMBIOS TABLE ENTRY POINT FOUND!\n");
+            smbios_table_entry_point = &efi_cfg->VendorTable;       // capture if matched
+            
+            break;
+        }
+    }
+
+    stiletto.stiletto_smbios.smbios_table_entry_point = smbios_table_entry_point;    // store SMBIOS entry point
+
+
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
     EFI_GUID efi_fs_guid = EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID;
     EFI_SIMPLE_FILE_SYSTEM_PROTOCOL *efi_fs;
@@ -172,7 +189,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     gBS->ExitBootServices(ImageHandle, efi_mem_map_key);
     Print(L"\n[Y]\tExitBootServices()\n\n");
 
-    
+
     // READY!
     ((__attribute__ ((sysv_abi)) void(*)(stiletto_t *))pImage_entry)(&stiletto);    // jump to kernel!
 
