@@ -57,7 +57,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     stiletto.stiletto_acpi.acpi_rsdp = rsdp;    // store RSDP
 
 
-    // parse SMBIOS for info
+    // parse SMBIOS for info (TODO: fix fetching data from strtable and collect all info)
     EFI_SMBIOS_PROTOCOL *efi_smbios;
     EFI_GUID efi_smbios_protocol_guid = EFI_SMBIOS_PROTOCOL_GUID;
 
@@ -74,11 +74,11 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
     // cast the found record into SMBIOS_TABLE_TYPE4 struct
     SMBIOS_TABLE_TYPE4 *smbios_table_type_4 = (SMBIOS_TABLE_TYPE4 *)smbios_record;
-    
-    Print(L"\nCoreCount: %d\n", smbios_table_type_4->CoreCount);
+
+    Print(L"\nCoreCount: %d\n", smbios_table_type_4->CoreCount);    // WORKING (4)
 
     char *ProcessorVersion = (char *)((SMBIOS_TABLE_STRING *)smbios_table_type_4 + smbios_table_type_4->Hdr.Length + smbios_table_type_4->ProcessorVersion);
-    Print(L"ProcessorVersion: %s\n", ProcessorVersion);
+    Print(L"ProcessorVersion: %s\n", ProcessorVersion); // ERROR!!! (garbage random bytes)
 
 
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
