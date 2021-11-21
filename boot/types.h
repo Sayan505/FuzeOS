@@ -1,7 +1,8 @@
 #pragma once
 
 
-// tallying for *nix on AMD64.
+// tallying for Linux on AMD64.
+
 
 // native length (64-bits)
 typedef unsigned long int uint64_t;

@@ -3,16 +3,23 @@
 
 #include <elf.h>
 
+
 #include <Uefi.h>
+
 #include <Guid/Acpi.h>
 #include <Guid/SmBios.h>
 #include <Guid/FileInfo.h>
+
 #include <Protocol/GraphicsOutput.h>
 #include <Protocol/Smbios.h>
 #include <Protocol/SimpleFileSystem.h>
+
 #include <Library/UefiLib.h>
 #include <Library/BaseMemoryLib.h>
 #include <Library/UefiBootServicesTableLib.h>
+#include <Library/UefiRuntimeServicesTableLib.h>
+#include <Library/MemoryAllocationLib.h>
+
 
 #include "types.h"
 #include "protocol/stiletto.h"
@@ -24,4 +31,40 @@
 uint64_t load_image(void *pImage);
 
 
-UINTN smbios_table_len(SMBIOS_STRUCTURE *hd);
+/*#define STRING_TOKEN(t) t
+
+EFI_STATUS
+GetOptionalStringByIndex (
+  IN      CHAR8                   *OptionalStrStart,
+  IN      UINT8                   Index,
+  OUT     CHAR16                  **String
+  )
+{
+  UINTN          StrSize;
+
+  if (Index == 0) {
+    *String = AllocateZeroPool (sizeof (CHAR16));
+    return EFI_SUCCESS;
+  }
+
+  StrSize = 0;
+  do {
+    Index--;
+    OptionalStrStart += StrSize;
+    StrSize           = AsciiStrSize (OptionalStrStart);
+  } while (OptionalStrStart[StrSize] != 0 && Index != 0);
+
+  if ((Index != 0) || (StrSize == 1)) {
+    //
+    // Meet the end of strings set but Index is non-zero, or
+    // Find an empty string
+    //
+    *String = GetStringById (STRING_TOKEN(STR_MISSING_STRING));
+  } else {
+    *String = AllocatePool (StrSize * sizeof (CHAR16));
+    AsciiStrToUnicodeStrS (OptionalStrStart, *String, StrSize);
+  }
+
+  return EFI_SUCCESS;
+}
+*/

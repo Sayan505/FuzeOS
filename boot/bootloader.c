@@ -57,49 +57,28 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     stiletto.stiletto_acpi.acpi_rsdp = rsdp;    // store RSDP
 
 
-    // fetch SMBIOS entry point
-    SMBIOS_TABLE_ENTRY_POINT *smbios_table_entry_point = NULL;
-    EFI_GUID efi_smbios_guid = SMBIOS_TABLE_GUID;
+    // parse SMBIOS for info
+    EFI_SMBIOS_PROTOCOL *efi_smbios;
+    EFI_GUID efi_smbios_protocol_guid = EFI_SMBIOS_PROTOCOL_GUID;
 
-    for(UINTN i = 0; i < SystemTable->NumberOfTableEntries; ++i) {
-        EFI_CONFIGURATION_TABLE *efi_cfg = &SystemTable->ConfigurationTable[i]; // go through all tables
-        if(CompareGuid(&efi_cfg->VendorGuid, &efi_smbios_guid)) {
-            smbios_table_entry_point = efi_cfg->VendorTable;       // capture if matched
-            
-            break;
-        }
-    }
+    EFI_SMBIOS_HANDLE smbios_handle = 0xFFFE;
+    EFI_SMBIOS_TABLE_HEADER *smbios_record = NULL;
 
-    // 2:32 AM
-    // parse SMBIOS (TODO: OPTIMIZE AND CLEAN UP THE CODE)
-    UINTN smbios_table_addr_initial = smbios_table_entry_point->TableAddress;
-    UINTN gross_entry_length = 0;  // hdr + data + strtable
-    UINTN current_addr = 0;
-    SMBIOS_STRUCTURE *smbios_struct = NULL;
-    UINTN entry_length = 0; // hdr + data
+    EFI_SMBIOS_TYPE smbios_record_type = 0;
+
+    gBS->LocateProtocol(&efi_smbios_protocol_guid, NULL, (VOID **)&efi_smbios);     // get SMBIOS entry point
+
+    // look for Type 4 (SMBIOS_TYPE_PROCESSOR_INFORMATION)
+    smbios_record_type = SMBIOS_TYPE_PROCESSOR_INFORMATION; // Type 4
+    efi_smbios->GetNext(efi_smbios, &smbios_handle, &smbios_record_type, &smbios_record, NULL);  // get
+
+    // cast the found record into SMBIOS_TABLE_TYPE4 struct
+    SMBIOS_TABLE_TYPE4 *smbios_table_type_4 = (SMBIOS_TABLE_TYPE4 *)smbios_record;
     
-    while(current_addr <= (smbios_table_entry_point->TableAddress + smbios_table_entry_point->TableLength)) {
-        current_addr = smbios_table_addr_initial + gross_entry_length;
-        smbios_struct      = (SMBIOS_STRUCTURE *)(current_addr);
+    Print(L"\nCoreCount: %d\n", smbios_table_type_4->CoreCount);
 
-        if(smbios_struct->Type == 4) {
-            Print(L"Found SMBIOS ENTRY");
-            entry_length = smbios_struct->Length;
-
-            break;
-        }
-
-        gross_entry_length += smbios_table_len((SMBIOS_STRUCTURE *)current_addr);
-    }
-
-    SMBIOS_TABLE_TYPE4 *table = (SMBIOS_TABLE_TYPE4 *)(current_addr);
-
-    Print(L"\n\nCORE COUNT: %d\n", table->CoreCount); // WORKING!
-
-    // now time to parse strings. sheeeeshh...
-    char *str = (char *)(current_addr + entry_length + table->ProcessorVersion);    // NOT WORKING. TODO.
-
-    Print(L"CPU NAME: %s\n", str);
+    char *ProcessorVersion = (char *)((SMBIOS_TABLE_STRING *)smbios_table_type_4 + smbios_table_type_4->Hdr.Length + smbios_table_type_4->ProcessorVersion);
+    Print(L"ProcessorVersion: %s\n", ProcessorVersion);
 
 
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
