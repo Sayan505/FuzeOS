@@ -2,7 +2,7 @@
 
 
 EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable) {
-    EFI_STATUS efi_status;
+    EFI_STATUS efi_status = EFI_SUCCESS;
 
     uint64_t   pImage_entry;    // stores the entry-point of the kernel image.
     stiletto_t stiletto;
@@ -70,8 +70,36 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
         }
     }
 
-    // parse the SMBIOS and extract info
-    // TODO
+    // 2:32 AM
+    // parse SMBIOS (TODO: OPTIMIZE AND CLEAN UP THE CODE)
+    UINTN smbios_table_addr_initial = smbios_table_entry_point->TableAddress;
+    UINTN gross_entry_length = 0;  // hdr + data + strtable
+    UINTN current_addr = 0;
+    SMBIOS_STRUCTURE *smbios_struct = NULL;
+    UINTN entry_length = 0; // hdr + data
+    
+    while(current_addr <= (smbios_table_entry_point->TableAddress + smbios_table_entry_point->TableLength)) {
+        current_addr = smbios_table_addr_initial + gross_entry_length;
+        smbios_struct      = (SMBIOS_STRUCTURE *)(current_addr);
+
+        if(smbios_struct->Type == 4) {
+            Print(L"Found SMBIOS ENTRY");
+            entry_length = smbios_struct->Length;
+
+            break;
+        }
+
+        gross_entry_length += smbios_table_len((SMBIOS_STRUCTURE *)current_addr);
+    }
+
+    SMBIOS_TABLE_TYPE4 *table = (SMBIOS_TABLE_TYPE4 *)(current_addr);
+
+    Print(L"\n\nCORE COUNT: %d\n", table->CoreCount); // WORKING!
+
+    // now time to parse strings. sheeeeshh...
+    char *str = (char *)(current_addr + entry_length + table->ProcessorVersion);    // NOT WORKING. TODO.
+
+    Print(L"CPU NAME: %s\n", str);
 
 
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
@@ -194,4 +222,14 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     ((__attribute__ ((sysv_abi)) void(*)(stiletto_t *))pImage_entry)(&stiletto);    // jump to kernel!
 
     return EFI_SUCCESS;
+}
+
+UINTN smbios_table_len(SMBIOS_STRUCTURE *hd)
+{
+    UINTN i;
+    const char *strtab = (char *)hd + hd->Length;
+    // Scan until we find a double zero byte
+    for (i = 1; strtab[i - 1] != '\0' || strtab[i] != '\0'; i++)
+        ;
+    return hd->Length + i + 1;
 }

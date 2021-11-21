@@ -64,7 +64,7 @@ void start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_memory.total_mem_bytes), 0xE9D8A6);
     k_putstr_rgb(" Bytes\r\n", 0xE9D8A6);
 
-    k_putstr_rgb("Display: ", 0x00B4D8);
+    k_putstr_rgb("Terminal: ", 0x00B4D8);
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_video.horiz), 0xE9D8A6);
     k_putstr_rgb(" x ", 0xE9D8A6);
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_video.vert), 0xE9D8A6);

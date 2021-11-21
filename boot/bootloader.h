@@ -8,11 +8,11 @@
 #include <Guid/SmBios.h>
 #include <Guid/FileInfo.h>
 #include <Protocol/GraphicsOutput.h>
+#include <Protocol/Smbios.h>
 #include <Protocol/SimpleFileSystem.h>
 #include <Library/UefiLib.h>
 #include <Library/BaseMemoryLib.h>
 #include <Library/UefiBootServicesTableLib.h>
-#include <IndustryStandard/SmBios.h>
 
 #include "types.h"
 #include "protocol/stiletto.h"
@@ -22,3 +22,6 @@
 
 
 uint64_t load_image(void *pImage);
+
+
+UINTN smbios_table_len(SMBIOS_STRUCTURE *hd);
