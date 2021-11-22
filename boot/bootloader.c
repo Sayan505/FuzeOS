@@ -76,10 +76,9 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
     Print(L"\nCoreCount: %d\n", smbios_table_type_x->CoreCount);    // WORKING
 
-    CHAR16 *NewString;
-    GetOptionalStringByIndex((CHAR8*)((CHAR8*)smbios_table_type_x + smbios_table_type_x->Hdr.Length), smbios_table_type_x->ProcessorVersion, &NewString);
-    Print(L"\nSTR: %s\n", NewString);
-    for(;;) { __asm__ volatile("hlt"); }
+    static CHAR8 String[64] = { 0 };
+    get_dmi_str_from_index((CHAR8 *)((CHAR8 *)smbios_record + smbios_record->Length), smbios_table_type_x->ProcessorVersion, String);
+    AsciiPrint("\nSTR: %s\n", String);
 
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
     EFI_GUID efi_fs_guid = EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID;
@@ -203,37 +202,24 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     return EFI_SUCCESS;
 }
 
-EFI_STATUS
-GetOptionalStringByIndex (
-  IN      CHAR8                   *OptionalStrStart,
-  IN      UINT8                   Index,
-  OUT     CHAR16                  **String
-  )
-{
-  UINTN          StrSize;
+EFI_STATUS get_dmi_str_from_index(IN CHAR8 *base_ptr, IN UINT8 strtable_offset, OUT CHAR8 *str_buffer) {
+    UINTN str_size = 0;
 
-  if (Index == 0) {
-    *String = AllocateZeroPool (sizeof (CHAR16));
+    if (strtable_offset == 0) {
+        str_buffer[0] = '\0'; // null str
+
+        return EFI_SUCCESS;
+    }
+
+    do {
+        --strtable_offset;
+        base_ptr += str_size;
+        str_size = AsciiStrSize(base_ptr);
+    } while (base_ptr[str_size] != 0 && strtable_offset != 0);
+
+    if (!((strtable_offset != 0) || (str_size == 1))) {
+        AsciiStrToUnicodeStrS(base_ptr, (CHAR16 *)str_buffer, str_size);    // fix locale (sheeeeshh)
+    }
+
     return EFI_SUCCESS;
-  }
-
-  StrSize = 0;
-  do {
-    Index--;
-    OptionalStrStart += StrSize;
-    StrSize           = AsciiStrSize (OptionalStrStart);
-  } while (OptionalStrStart[StrSize] != 0 && Index != 0);
-
-  if ((Index != 0) || (StrSize == 1)) {
-    //
-    // Meet the end of strings set but Index is non-zero, or
-    // Find an empty string
-    //
-    //*String = GetStringById (STRING_TOKEN ("Missing String"));
-  } else {
-    *String = AllocatePool (StrSize * sizeof (CHAR16));
-    AsciiStrToUnicodeStrS (OptionalStrStart, *String, StrSize);
-  }
-
-  return EFI_SUCCESS;
 }

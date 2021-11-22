@@ -4,6 +4,7 @@
 #include "stiletto_video.h"
 #include "stiletto_acpi.h"
 #include "stiletto_memory.h"
+#include "stiletto_dmi.h"
 
 
 typedef struct {

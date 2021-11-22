@@ -148,7 +148,7 @@ QEMUFLAGS = -bios ovmf/OVMF.fd				\
 			-device VGA,vgamem_mb=64		\
 			-hda $(IMGDIR)/$(IMG)			\
 			-m $(RAM)						\
-			-smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=1,sockets=1
+			-smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=0,sockets=1
 
 # testing:
 QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
@@ -160,7 +160,7 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
 			   fat:rw:$(FSDIR)/  			\
 			   -m $(RAM)					\
 			   -display sdl                 \
-			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=1,sockets=1
+			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=0,sockets=1
 
 # /dev/loop???:
 LOOPDSK := 0
