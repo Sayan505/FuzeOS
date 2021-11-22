@@ -57,6 +57,8 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     stiletto.stiletto_acpi.acpi_rsdp = rsdp;    // store RSDP
 
 
+
+
     // parse SMBIOS for info (TODO: fix fetching data from strtable and collect all info)
     EFI_SMBIOS_PROTOCOL *efi_smbios;
     EFI_GUID efi_smbios_protocol_guid = EFI_SMBIOS_PROTOCOL_GUID;
@@ -64,21 +66,52 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     EFI_SMBIOS_HANDLE smbios_handle = 0xFFFE;
     EFI_SMBIOS_TABLE_HEADER *smbios_record = NULL;
     EFI_SMBIOS_TYPE smbios_record_type;
+    CHAR8 smbios_string[64] = { 0 };
+    ZeroMem(smbios_string, 64);
 
     gBS->LocateProtocol(&efi_smbios_protocol_guid, NULL, (VOID **)&efi_smbios);     // get SMBIOS entry point
+
 
     // look for Type 4 (SMBIOS_TYPE_PROCESSOR_INFORMATION)
     smbios_record_type = SMBIOS_TYPE_PROCESSOR_INFORMATION; // Type 4
     efi_smbios->GetNext(efi_smbios, &smbios_handle, &smbios_record_type, &smbios_record, NULL);  // get
 
     // cast the found record into SMBIOS_TABLE_TYPE4 struct
-    SMBIOS_TABLE_TYPE4 *smbios_table_type_x = (SMBIOS_TABLE_TYPE4 *)smbios_record;
+    SMBIOS_TABLE_TYPE4 *smbios_table_type_4 = (SMBIOS_TABLE_TYPE4 *)smbios_record;
 
-    Print(L"\nCoreCount: %d\n", smbios_table_type_x->CoreCount);    // WORKING
+    stiletto.stiletto_dmi.processor.CurrentSpeed = smbios_table_type_4->CurrentSpeed;  // store numeric info
+    stiletto.stiletto_dmi.processor.CoreCount = smbios_table_type_4->CoreCount;        // store numeric info
+    stiletto.stiletto_dmi.processor.ThreadCount = smbios_table_type_4->ThreadCount;    // store numeric info
 
-    static CHAR8 String[64] = { 0 };
-    get_dmi_str_from_index((CHAR8 *)((CHAR8 *)smbios_record + smbios_record->Length), smbios_table_type_x->ProcessorVersion, String);
-    AsciiPrint("\nSTR: %s\n", String);
+    get_dmi_str_from_index((CHAR8 *)((CHAR8 *)smbios_record + smbios_record->Length), smbios_table_type_4->ProcessorVersion, smbios_string);    // get the string info
+    AsciiStrCpyS(stiletto.stiletto_dmi.processor.ProcessorVersion, 64, smbios_string);  // store string info
+    ZeroMem(smbios_string, 64); // reset buffer
+
+    get_dmi_str_from_index((CHAR8 *)((CHAR8 *)smbios_record + smbios_record->Length), smbios_table_type_4->ProcessorManufacturer, smbios_string);    // get the string info
+    AsciiStrCpyS(stiletto.stiletto_dmi.processor.ProcessorManufacturer, 64, smbios_string);  // store string info
+    ZeroMem(smbios_string, 64); // reset buffer
+
+
+    // look for Type 17 (SMBIOS_TYPE_MEMORY_DEVICE)
+    smbios_record_type = SMBIOS_TYPE_MEMORY_DEVICE; // Type 17
+    efi_smbios->GetNext(efi_smbios, &smbios_handle, &smbios_record_type, &smbios_record, NULL);  // get
+
+    // cast the found record into SMBIOS_TABLE_TYPE17 struct
+    SMBIOS_TABLE_TYPE17 *smbios_table_type_17 = (SMBIOS_TABLE_TYPE17 *)smbios_record;
+
+    stiletto.stiletto_dmi.memory_a.ConfiguredMemoryClockSpeed = smbios_table_type_17->ConfiguredMemoryClockSpeed;  // store numeric info
+
+    // TODO: GET TRUE PHYS MEM SIZE FROM TABLE 20.
+    // look for Type 20 (SMBIOS_TYPE_MEMORY_DEVICE_MAPPED_ADDRESS)
+    //smbios_record_type = SMBIOS_TYPE_MEMORY_DEVICE_MAPPED_ADDRESS; // Type 20
+    //efi_smbios->GetNext(efi_smbios, &smbios_handle, &smbios_record_type, &smbios_record, NULL);  // get
+
+    // cast the found record into SMBIOS_TABLE_TYPE20 struct
+    //SMBIOS_TABLE_TYPE20 *smbios_table_type_20 = (SMBIOS_TABLE_TYPE20 *)smbios_record;
+
+    stiletto.stiletto_dmi.memory_b.Size = smbios_table_type_17->Size; // store numeric info
+
+
 
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
     EFI_GUID efi_fs_guid = EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID;
@@ -204,9 +237,10 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
 EFI_STATUS get_dmi_str_from_index(IN CHAR8 *base_ptr, IN UINT8 strtable_offset, OUT CHAR8 *str_buffer) {
     UINTN str_size = 0;
+    CHAR16 str_temp[64] = { 0 };
 
     if (strtable_offset == 0) {
-        str_buffer[0] = '\0'; // null str
+        str_temp[0] = '\0'; // null str
 
         return EFI_SUCCESS;
     }
@@ -218,7 +252,9 @@ EFI_STATUS get_dmi_str_from_index(IN CHAR8 *base_ptr, IN UINT8 strtable_offset, 
     } while (base_ptr[str_size] != 0 && strtable_offset != 0);
 
     if (!((strtable_offset != 0) || (str_size == 1))) {
-        AsciiStrToUnicodeStrS(base_ptr, (CHAR16 *)str_buffer, str_size);    // fix locale (sheeeeshh)
+        // fix locale (sheeeeshh)
+        AsciiStrToUnicodeStrS(base_ptr, str_temp, str_size);
+        UnicodeStrToAsciiStrS(str_temp, str_buffer, str_size);  // TODO: FIND A PROPER WORKAROUND
     }
 
     return EFI_SUCCESS;
