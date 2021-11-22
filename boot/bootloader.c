@@ -63,8 +63,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 
     EFI_SMBIOS_HANDLE smbios_handle = 0xFFFE;
     EFI_SMBIOS_TABLE_HEADER *smbios_record = NULL;
-
-    EFI_SMBIOS_TYPE smbios_record_type = 0;
+    EFI_SMBIOS_TYPE smbios_record_type;
 
     gBS->LocateProtocol(&efi_smbios_protocol_guid, NULL, (VOID **)&efi_smbios);     // get SMBIOS entry point
 
@@ -73,13 +72,14 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     efi_smbios->GetNext(efi_smbios, &smbios_handle, &smbios_record_type, &smbios_record, NULL);  // get
 
     // cast the found record into SMBIOS_TABLE_TYPE4 struct
-    SMBIOS_TABLE_TYPE4 *smbios_table_type_4 = (SMBIOS_TABLE_TYPE4 *)smbios_record;
+    SMBIOS_TABLE_TYPE4 *smbios_table_type_x = (SMBIOS_TABLE_TYPE4 *)smbios_record;
 
-    Print(L"\nCoreCount: %d\n", smbios_table_type_4->CoreCount);    // WORKING (4)
+    Print(L"\nCoreCount: %d\n", smbios_table_type_x->CoreCount);    // WORKING
 
-    char *ProcessorVersion = (char *)((SMBIOS_TABLE_STRING *)smbios_table_type_4 + smbios_table_type_4->Hdr.Length + smbios_table_type_4->ProcessorVersion);
-    Print(L"ProcessorVersion: %s\n", ProcessorVersion); // ERROR!!! (garbage random bytes)
-
+    CHAR16 *NewString;
+    GetOptionalStringByIndex((CHAR8*)((CHAR8*)smbios_table_type_x + smbios_table_type_x->Hdr.Length), smbios_table_type_x->ProcessorVersion, &NewString);
+    Print(L"\nSTR: %s\n", NewString);
+    for(;;) { __asm__ volatile("hlt"); }
 
     // init EFI_SIMPLE_FILE_SYSTEM_PROTOCOL
     EFI_GUID efi_fs_guid = EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID;
@@ -203,12 +203,37 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     return EFI_SUCCESS;
 }
 
-UINTN smbios_table_len(SMBIOS_STRUCTURE *hd)
+EFI_STATUS
+GetOptionalStringByIndex (
+  IN      CHAR8                   *OptionalStrStart,
+  IN      UINT8                   Index,
+  OUT     CHAR16                  **String
+  )
 {
-    UINTN i;
-    const char *strtab = (char *)hd + hd->Length;
-    // Scan until we find a double zero byte
-    for (i = 1; strtab[i - 1] != '\0' || strtab[i] != '\0'; i++)
-        ;
-    return hd->Length + i + 1;
+  UINTN          StrSize;
+
+  if (Index == 0) {
+    *String = AllocateZeroPool (sizeof (CHAR16));
+    return EFI_SUCCESS;
+  }
+
+  StrSize = 0;
+  do {
+    Index--;
+    OptionalStrStart += StrSize;
+    StrSize           = AsciiStrSize (OptionalStrStart);
+  } while (OptionalStrStart[StrSize] != 0 && Index != 0);
+
+  if ((Index != 0) || (StrSize == 1)) {
+    //
+    // Meet the end of strings set but Index is non-zero, or
+    // Find an empty string
+    //
+    //*String = GetStringById (STRING_TOKEN ("Missing String"));
+  } else {
+    *String = AllocatePool (StrSize * sizeof (CHAR16));
+    AsciiStrToUnicodeStrS (OptionalStrStart, *String, StrSize);
+  }
+
+  return EFI_SUCCESS;
 }
