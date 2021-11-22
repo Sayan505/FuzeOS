@@ -148,19 +148,19 @@ QEMUFLAGS = -bios ovmf/OVMF.fd				\
 			-device VGA,vgamem_mb=64		\
 			-hda $(IMGDIR)/$(IMG)			\
 			-m $(RAM)						\
-			-smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=0,sockets=1
+			-smp cpus=$(CPUS),maxcpus=$(CPUS),cores=2,threads=2,sockets=1
 
 # testing:
 QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
-			   -machine q35					\
-			   -cpu max,kvm=off				\
+			   -machine q35                 \
+			   -cpu max,kvm=off		        \
 			   -d cpu_reset					\
 			   -serial stdio				\
 			   -device VGA,vgamem_mb=64		\
 			   fat:rw:$(FSDIR)/  			\
 			   -m $(RAM)					\
 			   -display sdl                 \
-			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=$(CPUS),threads=0,sockets=1
+			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=2,threads=2,sockets=1
 
 # /dev/loop???:
 LOOPDSK := 0
@@ -170,7 +170,8 @@ LOOPDSK := 0
 
 # START:
 all : build_system
-	@echo "\nOutput: $(IMGDIR)/$(IMG)\nmake run"
+	@echo "Output: $(IMGDIR)/$(IMG)"
+	@echo "make run"
 
 
 # build the whole system with disk images:

@@ -57,7 +57,6 @@ void start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb(" (ALPHA)\r\n\r\n", 0x005F73);
 
     k_putstr_rgb("CPU: ", 0x00B4D8);
-    //k_putstr_rgb(get_cpu_vendor_string(), 0xE9D8A6);  // CPUID
     k_putstr_rgb(kernel_stiletto.stiletto_dmi.processor.ProcessorVersion, 0xE9D8A6);
     k_putstr_rgb(" @ ", 0x00B4D8);
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.processor.CurrentSpeed), 0xE9D8A6);
@@ -65,8 +64,9 @@ void start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.processor.CoreCount), 0xE9D8A6);
     k_putstr_rgb(" Cores, ", 0x00B4D8);
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.processor.ThreadCount), 0xE9D8A6);
-    k_putstr_rgb(" Threads)", 0x00B4D8);
-    k_putstr("\r\n");
+    k_putstr_rgb(" Threads)  [", 0x00B4D8);
+    k_putstr_rgb(get_cpu_vendor_string(), 0xE9D8A6);  // CPUID
+    k_putstr("]\r\n");
 
     k_putstr_rgb("Memory: ", 0x00B4D8);
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.memory_b.Size), 0xE9D8A6);
