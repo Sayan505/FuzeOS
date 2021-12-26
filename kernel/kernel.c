@@ -10,7 +10,7 @@
 
 __attribute__ ((sysv_abi))
 void start_kernel(stiletto_t *stiletto) {
-    // back it up
+    // fork it up
     memcpy(&kernel_stiletto, stiletto, sizeof(stiletto_t));
 
     // init gdt
@@ -55,7 +55,9 @@ void start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb("\r\nFuzeOS ", 0xEE9B00);
     k_putstr_rgb("V0.01-100", 0x0A9396);
     k_putstr_rgb(" (ALPHA)\r\n\r\n", 0x005F73);
+    
 
+    /*
     k_putstr_rgb("CPU: ", 0x00B4D8);
     k_putstr_rgb(kernel_stiletto.stiletto_dmi.processor.ProcessorVersion, 0xE9D8A6);
     k_putstr_rgb(" @ ", 0x00B4D8);
@@ -77,8 +79,7 @@ void start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb(" x ", 0xE9D8A6);
     k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_video.vert), 0xE9D8A6);
     k_putstr("\r\n");
-
-    k_putstr("\r\n> ");
+    */
 
 
 
