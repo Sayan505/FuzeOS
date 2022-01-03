@@ -50,14 +50,13 @@ IMG = OS.img
 # disk image size in MiB:
 IMGMB = 64
 
-# QEMU config:
+# QEMU Memory:
 RAM = 8G
-CPUS = 4
 
 # output dirs:
   # extra sources:
 EDKDIR     = edk2
-EDKBRANCH  = master #edk2-stable202108-rc1
+EDKBRANCH  = master
 BOOTSRCDIR = boot
 
   # EDK2 init & FuzeBootPkg:
@@ -148,7 +147,7 @@ QEMUFLAGS = -bios ovmf/OVMF.fd				\
 			-device VGA,vgamem_mb=64		\
 			-hda $(IMGDIR)/$(IMG)			\
 			-m $(RAM)						\
-			-smp cpus=$(CPUS),maxcpus=$(CPUS),cores=2,threads=2,sockets=1
+			-smp cpus=4
 
 # testing:
 QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
@@ -160,7 +159,7 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
 			   fat:rw:$(FSDIR)/  			\
 			   -m $(RAM)					\
 			   -display sdl                 \
-			   -smp cpus=$(CPUS),maxcpus=$(CPUS),cores=2,threads=2,sockets=1
+			   -smp cpus=4
 
 # /dev/loop???:
 LOOPDSK := 0
