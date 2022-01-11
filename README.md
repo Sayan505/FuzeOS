@@ -7,39 +7,6 @@ An experimental x86_64 hobby OS project.
 [![FuzeOS Kernel CI](https://github.com/Sayan505/FuzeOS/actions/workflows/test_knl.yml/badge.svg)](https://github.com/Sayan505/FuzeOS/actions/workflows/test_knl.yml)
 
 &nbsp;
-## Road Map
-#####  LEGEND:
-💙: On my list.  
-💛: In-progress.  
-💚: Completed.  
-&nbsp;
-### Progress:
-💚 Boot Protocol.  
-💚 UEFI Booting (ELF64 kernel).  
-💚 Serial Port.  
-💚 GDT.  
-💙 Re-configure Paging.  
-💚 GOP Video.  
-💚 Text Renderer on GOP.  
-💚 stdout.  
-💙 Load IDT.  
-💛 pcspkr.  
-💙 PMM.  
-💙 VMM.  
-💙 Parse ACPI tables.  
-💙 ACPI Shutdown.  
-💙 APICs.  
-💙 LAPIC Timer.  
-💙 HPET Timer.  
-💙 A Graphics Library. (GOP)  
-💙 USB Driver.  
-💙 stdin.  
-💙 PCI Driver.  
-💙 SMP & SMT.  
-💙 Scheduler.  
-💙 Storage Driver. (AHCI, FAT32)   
-And, so on...   
-
 &nbsp;
 
 ## Build Fuze
