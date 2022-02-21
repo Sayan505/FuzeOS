@@ -8,3 +8,6 @@
 # garbage
 !/.vscode/c_cpp_properties.json
 /.vscode/
+
+# QEMU log
+/log.txt

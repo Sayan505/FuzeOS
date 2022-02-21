@@ -8,7 +8,7 @@
 
 // memory
 __attribute__((unused))
-static int memcmp(const VOID *s1, const VOID *s2, UINT64 n_bytes) {
+static INT32 memcmp(const VOID *s1, const VOID *s2, UINT64 n_bytes) {
     UINT64 ofs = 0;
 	CHAR   c1 = 0;
 
@@ -19,7 +19,7 @@ static int memcmp(const VOID *s1, const VOID *s2, UINT64 n_bytes) {
 }
 
 __attribute__((unused))
-static void* memcpy(void* dest, const void* src, UINT64 n_bytes) {
+static VOID* memcpy(VOID* dest, const VOID* src, UINT64 n_bytes) {
     char *pszDest = (char *)dest;
     const char *pszSource = (const char *)src;
     
@@ -34,7 +34,7 @@ static void* memcpy(void* dest, const void* src, UINT64 n_bytes) {
 }
 
 __attribute__((unused))
-static void* memset(VOID *dest, BYTE data_8, UINT64 n_bytes) {
+static VOID* memset(VOID *dest, BYTE data_8, UINT64 n_bytes) {
 	BYTE *p = (BYTE *)dest;
 
 	while (n_bytes--)
@@ -44,7 +44,7 @@ static void* memset(VOID *dest, BYTE data_8, UINT64 n_bytes) {
 }
 
 __attribute__((unused))
-static void* zero_memory(VOID *dest, UINT64 n_bytes) {
+static VOID* zero_memory(VOID *dest, UINT64 n_bytes) {
 	BYTE *p = (BYTE *)dest;
 
 	while (n_bytes--)
@@ -130,3 +130,6 @@ INT32 strncmp(const CHAR *s1, const CHAR *s2, UINT64 n_bytes) {
 
     return c1 - c2;
 }
+
+
+#define UNUSED(__x__) ((void)__x__)

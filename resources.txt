@@ -10,4 +10,6 @@ Intel SDM: https://www.intel.com/content/www/us/en/developer/articles/technical/
 
 OSDEV Wiki: https://wiki.osdev.org/Main_Page
 
+https://blog.llandsmeer.com/tech/2019/07/21/uefi-x64-userland.html
+
 and, the OSDEV discord.

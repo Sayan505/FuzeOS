@@ -2,43 +2,53 @@ OUTPUT_FORMAT(elf64-x86-64)
 
 ENTRY(start_kernel)
 
+
+LNK_SYM_kernel_VMA_start = 0; /*TODO: higher-half kernel, -2GiB (0xFFFFFFFF80000000)*/
+
 SECTIONS
 {
-    . = 0x100000;
+    . = LNK_SYM_kernel_VMA_start + 0x200000;
+    . = ALIGN(0x1000);
+
     __LNK_SYM_kernel_start = .;
 
     .text : ALIGN(0x1000)
     {
         __LNK_SYM_text_start = .;
-        *(.text)
+        *(.text*)
         __LNK_SYM_text_end   = .;
     }
 
     .rodata : ALIGN(0x1000)
     {
         __LNK_SYM_rodata_start = .;
-        *(.rodata)
+        *(.rodata*)
         __LNK_SYM_rodata_end   = .;
     }
 
     .data : ALIGN(0x1000)
     {
         __LNK_SYM_data_start = .;
-        *(.data)
+        *(.data*)
         __LNK_SYM_data_end   = .;
     }
 
     .eh_frame : ALIGN(0x1000)
     {
         __LNK_SYM_eh_frame_start = .;
-        *(.eh_frame)
+        *(.eh_frame*)
         __LNK_SYM_eh_frame_end  = .;
+    }
+
+    .sym : ALIGN(4K) {
+        *(.sym*)
+        *(COMMON)
     }
 
     .bss : ALIGN(0x1000)
     {
         __LNK_SYM_bss_start = .;
-        *(.bss)
+        *(.bss*)
         LONG(0)     /* "The LONG(0) forces the bss section to be written to the file." */
         __LNK_SYM_bss_end   = .;
 

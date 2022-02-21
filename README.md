@@ -12,38 +12,29 @@ An experimental x86_64 hobby OS project.
 ## Build Fuze
 ### &nbsp; Get the source
 &nbsp; &nbsp; `git clone` to test the kernel with the pre-build bootloader or,  
-&nbsp; &nbsp; `make init edk2` after cloning to fetch EDK2 + all its submodules.  
-&nbsp; &nbsp; `make delete edk2` to remove the edk2 folder after working.
+&nbsp; &nbsp; `make init_edk2` after cloning to fetch EDK2 + all its submodules.  
 &nbsp;  
 
 ### &nbsp; Requirements
 * clang (for Kernel)
-* GCC (for the Bootloader)
+* GCC (>=5) (for the Bootloader)
 * GNU LD
 * nasm
 * GNU Parted
 * dosfstools
-* EDK II (optional; binary included, to build the bootloader)
+* EDK II (optional. binary included to build the bootloader)
 &nbsp;  
 
 ### &nbsp; Process
 &nbsp; Build full system with disk images (losetup requires root):  
-&nbsp; &nbsp; `make`  
-  
-&nbsp; Build full system in `$(FSDIR)` without generating disk images:  
-&nbsp; &nbsp; `make testbuildall`  
-  
-&nbsp; Build the kernel only, in `$(FSDIR)` without generating disk images and use the pre-built bootloader:  
-&nbsp; &nbsp; `make testbuild`. Then do `make img` to generate a disk image. This is what you should use to test the system out.
-
+&nbsp; &nbsp; `make kernel`  
+&nbsp; &nbsp; `make fs`  
+&nbsp; &nbsp; `make img`  
 &nbsp;
 
 ## Run Fuze
 &nbsp; Run the full system from the disk image:  
-&nbsp; &nbsp; `make run`  
-&nbsp; Run the full system from $(FSDIR) in RW mode:  
-&nbsp; &nbsp; `make testrun`  
-
+&nbsp; &nbsp; `make run`   
 &nbsp;
 
 ## Build FuzeBoot UEFI bootloader

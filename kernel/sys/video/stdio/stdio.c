@@ -1,5 +1,5 @@
-#include <sys/video/stdout/internal.h>
-#include <sys/video/stdout/stdout.h>
+#include <sys/video/stdio/internal.h>
+#include <sys/video/stdio/stdio.h>
 
 
 static INT32 posi_x = char_width;

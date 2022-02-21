@@ -1,4 +1,4 @@
-#include <sys/video/stdout/cstr.h>
+#include <sys/video/stdio/cstr.h>
 
 
 CHAR uint_to_str_buffer[128] = { 0 };

@@ -39,7 +39,7 @@
 CC   = clang
 LD   = ld
 AS   = nasm
-QEMU = qemu-system-x86_64
+QEMU = qemu-system-x86_64.exe
 
 # outputs:
 KNL = kernel
@@ -159,6 +159,7 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
 			   fat:rw:$(FSDIR)/  			\
 			   -m $(RAM)					\
 			   -display sdl                 \
+			   -D log.txt                   \
 			   -smp cpus=4
 
 # /dev/loop???:

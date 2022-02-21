@@ -5,25 +5,11 @@
 
 #include <kernel.h>
 
-#include <lib/nolibc.h>
-
 
 __attribute__ ((sysv_abi))
 void start_kernel(stiletto_t *stiletto) {
     // fork it up
     memcpy(&kernel_stiletto, stiletto, sizeof(stiletto_t));
-
-    // init gdt
-    LOAD_GDT64();
-
-    // get the segments right
-    __asm__ volatile("mov $0x10, %ax");
-
-    __asm__ volatile("mov %ax, %ss");
-    __asm__ volatile("mov %ax, %ds");
-    __asm__ volatile("mov %ax, %es");
-    __asm__ volatile("mov %ax, %gs");
-    __asm__ volatile("mov %ax, %fs");
 
 
     // init serial
@@ -32,8 +18,8 @@ void start_kernel(stiletto_t *stiletto) {
     com1_outs("Initialized Serial (COM1)\n");
 
 
-    // init memory
-    //init_memory(kernel_stiletto.stiletto_memory);
+    // init gdt 
+    //init_gdt();
 
 
     // init video
