@@ -101,67 +101,67 @@ OBJ := ${C_KERNELSRC:.c=.o} ${ASM_KERNELSRC:.asm=.o}
 
 
 # toolchain flags:
-CFLAGS = -target x86_64-unknown-none-elf64 	\
-		 -O2								\
-		 -std=c11							\
-		 -Wall								\
-		 -Wextra							\
-		 -Werror                            \
-		 -Wpedantic							\
-		 -Wno-gnu-label-as-value			\
-		 -ffreestanding						\
-		 -nostdlib							\
-		 -nostdinc							\
-		 -nodefaultlibs						\
-		 -fno-pic							\
-		 -fno-stack-protector				\
-		 -fno-omit-frame-pointer			\
-		 -mcmodel=kernel					\
-		 -mno-red-zone						\
-		 -mno-mmx							\
-		 -mno-sse							\
-		 -mno-sse2							\
-		 -mno-sse3							\
-		 -mno-ssse3							\
-		 -mno-sse4							\
-		 -mno-sse4.1						\
-		 -mno-sse4.2						\
-		 -mno-80387							\
-		 -I.								\
-		 -Ikernel
+CFLAGS =       -target x86_64-unknown-none-elf64                              \
+               -O2                                                            \
+               -std=c11                                                       \
+               -Wall                                                          \
+               -Wextra                                                        \
+               -Werror                                                        \
+               -Wpedantic                                                     \
+               -Wno-gnu-label-as-value                                        \
+               -ffreestanding                                                 \
+               -nostdlib                                                      \
+               -nostdinc                                                      \
+               -nodefaultlibs                                                 \
+               -fno-pic                                                       \
+               -fno-stack-protector                                           \
+               -fno-omit-frame-pointer                                        \
+               -mcmodel=kernel                                                \
+               -mno-red-zone                                                  \
+               -mno-mmx                                                       \
+               -mno-sse                                                       \
+               -mno-sse2                                                      \
+               -mno-sse3                                                      \
+               -mno-ssse3                                                     \
+               -mno-sse4                                                      \
+               -mno-sse4.1                                                    \
+               -mno-sse4.2                                                    \
+               -mno-80387                                                     \
+               -I.                                                            \
+               -Ikernel
 
-LDFLAGS = -T linker.ld						\
-		  -no-pie							\
-		  -nostdlib							\
-		  -z max-page-size=0x1000
+LDFLAGS =      -T linker.ld                                                   \
+               -no-pie                                                        \
+               -nostdlib                                                      \
+               -z max-page-size=0x1000
 
-ASFLAGS = -O0								\
-		  -f elf64
+ASFLAGS =      -O0                                                            \
+               -f elf64
 		  
 
-QEMUFLAGS = -bios ovmf/OVMF.fd				\
-			-machine q35					\
-			-cpu max,kvm=off				\
-			-d cpu_reset					\
-			-serial stdio					\
-			-device VGA,vgamem_mb=64		\
-			-hda $(IMGDIR)/$(IMG)			\
-			-m $(RAM)						\
-			-display sdl                    \
-			-smp cpus=4
+QEMUFLAGS =    -bios ovmf/OVMF.fd                                             \
+               -machine q35                                                   \
+               -cpu max,kvm=off                                               \
+               -d cpu_reset                                                   \
+               -serial stdio                                                  \
+               -device VGA,vgamem_mb=64                                       \
+               -hda $(IMGDIR)/$(IMG)                                          \
+               -m $(RAM)                                                      \
+               -display sdl                                                   \
+               -smp cpus=4
 
 # testing:
-QEMURUNFLAGS = -bios ovmf/OVMF.fd			\
-			   -machine q35                 \
-			   -cpu max,kvm=off		        \
-			   -d cpu_reset					\
-			   -serial stdio				\
-			   -device VGA,vgamem_mb=64		\
-			   fat:rw:$(FSDIR)/  			\
-			   -m $(RAM)					\
-			   -display sdl                 \
-			   -D log.txt                   \
-			   -smp cpus=4
+QEMURUNFLAGS = -bios ovmf/OVMF.fd                                             \
+               -machine q35                                                   \
+               -cpu max,kvm=off                                               \
+               -d cpu_reset                                                   \
+               -serial stdio                                                  \
+               -device VGA,vgamem_mb=64                                       \
+               fat:rw:$(FSDIR)/                                               \
+               -m $(RAM)                                                      \
+               -display sdl                                                   \
+               -D log.txt                                                     \
+               -smp cpus=4
 
 # /dev/loop???:
 LOOPDSK := 0
