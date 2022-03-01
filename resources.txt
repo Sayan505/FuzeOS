@@ -2,7 +2,7 @@ UEFI: https://uefi.org/specifications
 ACPI: https://uefi.org/specifications
 UEFI Platform Initialization Specification: https://uefi.org/specifications
 SMBIOS: https://www.dmtf.org/standards/smbios
-EDK2: https://github.com/tianocore/
+EDK2: https://github.com/tianocore/edk2
 
 AMD64 Architecture Programmer’s Manual Volume 2: System Programming: https://developer.amd.com/resources/developer-guides-manuals/
 
