@@ -1,13 +1,10 @@
 # Fuze
-An experimental x86_64 hobby OS project.
+An experimental x86_64 hobby OS project. 
 &nbsp;  
 &nbsp;  
-&nbsp;  
-
 [![FuzeOS Kernel CI](https://github.com/Sayan505/FuzeOS/actions/workflows/test_knl.yml/badge.svg)](https://github.com/Sayan505/FuzeOS/actions/workflows/test_knl.yml)
-
-&nbsp;
-&nbsp;
+&nbsp;  
+&nbsp;  
 
 ## Build Fuze
 ### &nbsp; Get the source
@@ -43,8 +40,7 @@ An experimental x86_64 hobby OS project.
 * libuuid-devel
 * iasl
 * nasm
-* [EDK II](https://github.com/tianocore/edk2):  
-###### &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Dependencies of EDK II are subject to change.
+* [EDK II](https://github.com/tianocore/edk2)  
 
 ### &nbsp; Process
 + Build with FuzeBoot. (Platform and inf included)
