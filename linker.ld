@@ -9,7 +9,7 @@ __LNK_SYM_kernel_VMA_start = 0x0000000000000000; /*TODO: higher-half kernel, -2G
 SECTIONS
 {
     . = ALIGN(0x1000);
-    . = __LNK_SYM_kernel_VMA_start + 0x0000000000100000;
+    . = (__LNK_SYM_kernel_VMA_start + 0x0000000000100000);
 
     __LNK_SYM_kernel_start = .;
 
