@@ -13,7 +13,7 @@ void start_kernel(stiletto_t *stiletto) {
 
 
     // init gdt
-    //init_gdt();
+    init_gdt();
 
 
     // init serial

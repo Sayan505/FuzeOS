@@ -9,7 +9,7 @@
 
 
 // GDT
-//#include <sys/gdt64/gdt64.h>
+#include <sys/gdt64/gdt64.h>
 
 
 // boot protocol
