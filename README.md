@@ -43,7 +43,6 @@ An experimental x86_64 hobby OS project.
 * libuuid-devel
 * iasl
 * nasm
-* python3-distutils
 * [EDK II](https://github.com/tianocore/edk2):  
 ###### &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Dependencies of EDK II are subject to change.
 

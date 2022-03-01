@@ -154,11 +154,12 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     stiletto.stiletto_memory.pMem_map             = efi_mem_map;
     stiletto.stiletto_memory.map_sz               = efi_mem_map_sz;
     stiletto.stiletto_memory.desc_sz              = efi_desc_sz;
+
+    Print(L"\n[Y]\tFetched Memory Map.\n");
     
     
     // ExitBootServices()
     gBS->ExitBootServices(ImageHandle, efi_mem_map_key);
-    Print(L"\n[Y]\tExitBootServices()\n\n");
 
 
     // READY!

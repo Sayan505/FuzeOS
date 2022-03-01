@@ -6,20 +6,19 @@
 #include <kernel.h>
 
 
-__attribute__ ((sysv_abi))
 void start_kernel(stiletto_t *stiletto) {
     // fork it up
+    zero_memory(&kernel_stiletto, sizeof(stiletto_t));
     memcpy(&kernel_stiletto, stiletto, sizeof(stiletto_t));
+
+
+    // init gdt
+    //init_gdt();
 
 
     // init serial
     init_com1();
-
     com1_outs("Initialized Serial (COM1)\n");
-
-
-    // init gdt 
-    //init_gdt();
 
 
     // init video
@@ -41,7 +40,7 @@ void start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb("\r\nFuzeOS ", 0xEE9B00);
     k_putstr_rgb("V0.01-100", 0x0A9396);
     k_putstr_rgb(" (ALPHA)\r\n\r\n", 0x005F73);
-    
+   
 
     /*
     k_putstr_rgb("CPU: ", 0x00B4D8);
@@ -69,9 +68,8 @@ void start_kernel(stiletto_t *stiletto) {
 
 
 
-
     __asm__ volatile("cli");
-    __asm__ volatile("hlt");   // halt cpu
+    __asm__ volatile("hlt");
 }
 
 

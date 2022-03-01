@@ -1,14 +1,15 @@
 OUTPUT_FORMAT(elf64-x86-64)
+OUTPUT_ARCH(i386:x86-64)
 
 ENTRY(start_kernel)
 
 
-LNK_SYM_kernel_VMA_start = 0; /*TODO: higher-half kernel, -2GiB (0xFFFFFFFF80000000)*/
+__LNK_SYM_kernel_VMA_start = 0x0000000000000000; /*TODO: higher-half kernel, -2GiB (0xFFFFFFFF80000000)*/
 
 SECTIONS
 {
-    . = LNK_SYM_kernel_VMA_start + 0x200000;
     . = ALIGN(0x1000);
+    . = (__LNK_SYM_kernel_VMA_start + 0x0000000000100000);
 
     __LNK_SYM_kernel_start = .;
 
@@ -17,10 +18,7 @@ SECTIONS
         __LNK_SYM_text_start = .;
         *(.text*)
         __LNK_SYM_text_end   = .;
-    }
 
-    .rodata : ALIGN(0x1000)
-    {
         __LNK_SYM_rodata_start = .;
         *(.rodata*)
         __LNK_SYM_rodata_end   = .;
@@ -33,14 +31,7 @@ SECTIONS
         __LNK_SYM_data_end   = .;
     }
 
-    .eh_frame : ALIGN(0x1000)
-    {
-        __LNK_SYM_eh_frame_start = .;
-        *(.eh_frame*)
-        __LNK_SYM_eh_frame_end  = .;
-    }
-
-    .sym : ALIGN(4K) {
+    .sym : ALIGN(0x1000) {
         *(.sym*)
         *(COMMON)
     }
@@ -57,6 +48,7 @@ SECTIONS
 
     /DISCARD/ :
     {
+        *(.eh_frame)
         *(.comment)
     }
 

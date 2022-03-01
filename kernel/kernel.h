@@ -9,11 +9,13 @@
 
 
 // GDT
-#include <sys/gdt64/gdt64.h>
+//#include <sys/gdt64/gdt64.h>
 
 
 // boot protocol
 #include <sys/bootprotocol/stiletto.h>
+
+static stiletto_t kernel_stiletto;
 
 
 // serial port
@@ -23,8 +25,6 @@
 // video
 #include <sys/video/init.h>     // internal init code
 #include <lib/video.h>
-
-static stiletto_t kernel_stiletto = { 0 };
 
 
 // stdio
@@ -36,7 +36,3 @@ static stiletto_t kernel_stiletto = { 0 };
 
 // CPU
 #include <lib/cpuid.h>
-
-
-// welcome screen
-void welcome_screen();

@@ -39,7 +39,7 @@
 CC   = clang
 LD   = ld
 AS   = nasm
-QEMU = qemu-system-x86_64.exe
+QEMU = qemu-system-x86_64
 
 # outputs:
 KNL = kernel
@@ -103,7 +103,7 @@ OBJ := ${C_KERNELSRC:.c=.o} ${ASM_KERNELSRC:.asm=.o}
 # toolchain flags:
 CFLAGS = -target x86_64-unknown-none-elf64 	\
 		 -O2								\
-		 -std=c17							\
+		 -std=c11							\
 		 -Wall								\
 		 -Wextra							\
 		 -Werror                            \
@@ -147,6 +147,7 @@ QEMUFLAGS = -bios ovmf/OVMF.fd				\
 			-device VGA,vgamem_mb=64		\
 			-hda $(IMGDIR)/$(IMG)			\
 			-m $(RAM)						\
+			-display sdl                    \
 			-smp cpus=4
 
 # testing:
@@ -351,6 +352,7 @@ clean :
 	rm -rf $(BUILDDIR)
 	rm -rf $(shell find ./ -type d \( -path ./edk2 \) -prune -false -o -name '*.o')
 	rm -rf edk2/Build/
+	rm -rf log.txt
 
 clean_ci :
 	rm -rf $(BUILDDIR)
