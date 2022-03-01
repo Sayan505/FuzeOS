@@ -1,5 +1,5 @@
-#include <sys/video/stdio/internal.h>
-#include <sys/video/stdio/stdio.h>
+#include <sys/gop_console/internal.h>
+#include <sys/gop_console/console.h>
 
 
 static INT32 posi_x = char_width;

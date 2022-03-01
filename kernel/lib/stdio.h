@@ -1,5 +1,7 @@
-// Font rendering routines
+// Graphical I/0 abstractions
 
-#include <sys/video/stdio/stdio.h>
 
-#include <sys/video/stdio/cstr.h>
+# pragma once
+
+
+#include <sys/gop_console/console.h>
