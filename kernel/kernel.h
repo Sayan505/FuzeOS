@@ -15,7 +15,7 @@
 // boot protocol
 #include <sys/bootprotocol/stiletto.h>
 
-static stiletto_t kernel_stiletto;
+static stiletto_t kernel_stiletto;    // kernel's fork of the boot protocol
 
 
 // serial port
@@ -27,7 +27,7 @@ static stiletto_t kernel_stiletto;
 #include <lib/video.h>
 
 
-// stdio
+// console/stdio
 #include <lib/stdio.h>
 
 

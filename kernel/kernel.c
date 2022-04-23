@@ -29,7 +29,7 @@ void start_kernel(stiletto_t *stiletto) {
 
     // READY!
     k_putstr_rgb(
-        " ______   _    _   ______  ______  ""  ""  ____    _____ ""\r\n"
+        "  ______   _    _   ______  ______  ""  ""  ____    _____ ""\r\n"
         "|  ____| | |  | | |___  / |  ____| ""  "" / __ \\  / ____|""\r\n"
         "| |__    | |  | |    / /  | |__    ""  ""| |  | | | (___  ""\r\n"
         "|  __|   | |  | |   / /   |  __|   ""  ""| |  | |  \\___ \\ ""\r\n"
@@ -40,7 +40,7 @@ void start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb("\r\nFuzeOS ", 0xEE9B00);
     k_putstr_rgb("V0.01-100", 0x0A9396);
     k_putstr_rgb(" (ALPHA)\r\n\r\n", 0x005F73);
-   
+
 
     /*
     k_putstr_rgb("CPU: ", 0x00B4D8);
