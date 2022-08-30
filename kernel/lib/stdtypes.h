@@ -20,12 +20,12 @@ typedef unsigned char UCHAR;
 typedef unsigned char UINT8;
 
 typedef signed   char INT8;
-typedef signed   char SBYTE;    // signed byte
+typedef signed   char SBYTE;        // signed byte
 
 typedef char          CHAR;
 typedef char          SCHAR;
 
-typedef unsigned char uint8_t;
+typedef unsigned char uint8_t;      // for compat
 
 
 // word (16-bits)
@@ -34,7 +34,7 @@ typedef unsigned short UINT16;
 
 typedef signed   short INT16;
 
-typedef unsigned short uint16_t;
+typedef unsigned short uint16_t;    // for compat
 
 
 // double-word (32-bits)
@@ -43,7 +43,7 @@ typedef unsigned int UINT32;
 
 typedef signed   int INT32;
 
-typedef unsigned int uint32_t;    // for compat
+typedef unsigned int uint32_t;      // for compat
 
 
 // void
@@ -51,3 +51,8 @@ typedef void VOID;
 
 // NULL
 #define NULL ('\0')
+
+// mem addr
+typedef void* PHYS_ADDR;
+typedef void* VIRT_ADDR;
+typedef void* ADDR;

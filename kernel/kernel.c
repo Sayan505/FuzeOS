@@ -39,7 +39,8 @@ void start_kernel(stiletto_t *stiletto) {
 
     k_putstr_rgb("\r\nFuzeOS ", 0xEE9B00);
     k_putstr_rgb("V0.01-100", 0x0A9396);
-    k_putstr_rgb(" (ALPHA)\r\n\r\n", 0x005F73);
+    k_putstr_rgb(" (ALPHA)\r\n", 0x005F73);
+    k_putstr_rgb(get_cpu_vendor_string(), 0xE9D8A6);  // CPUID
 
 
     /*

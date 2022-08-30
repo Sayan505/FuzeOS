@@ -28,14 +28,28 @@ typedef struct tag_gdt_entry {
 typedef struct tag_gdt {
     gdt_entry_t null;
 
-    gdt_entry_t kernel_cs;
-    gdt_entry_t kernel_ds;
+    gdt_entry_t kernel_cs;  // 0x08 (kernel base selector)
+    gdt_entry_t kernel_ds;  // 0x10
+
+    gdt_entry_t user_null;  // user base selector
+
+    gdt_entry_t user_cs;    // 0x20
+    gdt_entry_t user_ds;    // 0x28
+
+    gdt_entry_t ovmf_ds;    // 0x30
+    gdt_entry_t ovmf_cs;    // 0x38
+
+    gdt_entry_t tss_low;    // 0x40
+    gdt_entry_t tss_high;   // 0x48
 } gdt_t;
 
 
 #pragma pack()
 
+extern gdt_t gdt;
 
 extern void LOAD_GDT64(gdt_desc_t* gdt_desc);
 
 void init_gdt();
+
+// ref: https://wiki.osdev.org/Global_Descriptor_Table
