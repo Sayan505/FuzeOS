@@ -53,7 +53,7 @@ VOID serial_str_out(UINT16 port, const char* strb) {
 /*  external    */
 
 
-VOID init_com1() {
+VOID init_com1(VOID) {
     init_serial(COM1);
 }
 
@@ -65,6 +65,6 @@ VOID com1_outs(const char* __strb__) {
     serial_str_out(COM1, __strb__);
 }
 
-BYTE com1_inb() {
+BYTE com1_inb(VOID) {
     return serial_char_in(COM1);
 }

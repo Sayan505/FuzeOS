@@ -50,6 +50,6 @@ extern gdt_t gdt;
 
 extern void LOAD_GDT64(gdt_desc_t* gdt_desc);
 
-void init_gdt();
+VOID init_gdt(VOID);
 
 // ref: https://wiki.osdev.org/Global_Descriptor_Table

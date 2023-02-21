@@ -5,7 +5,7 @@
 
 VOID putpixel_routine(UINT32 x, UINT32 y, UINT32 color);
 
-VOID clr_scr();
+VOID clr_scr(VOID);
 
 VOID fill_scr(UINT32 hex_rgb_color);
 

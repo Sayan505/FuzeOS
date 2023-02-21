@@ -1,6 +1,6 @@
 #include <sys/cpu/cpuid/cpuid.h>
 
-char* get_cpu_vendor_string() {
+CHAR* get_cpu_vendor_string(VOID) {
     static UINT32 cpu_vendor_string[4] = { 0 };
 
     __asm__("mov $0x0, %eax\n\t");

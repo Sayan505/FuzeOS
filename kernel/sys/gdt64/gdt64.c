@@ -13,7 +13,7 @@ static VOID* zero_memory(VOID *dest, UINT64 n_bytes) {
 }
 
 
-void init_gdt() {
+VOID init_gdt(VOID) {
     // populate GDT
     gdt_t gdt = {
         {0x00, 0x00, 0x00, 0x00, 0x00, 0x00},    // struct gdt_entry null;
