@@ -1,5 +1,4 @@
 #include <sys/gdt64/gdt64.h>
-#include <sys/gdt64/tss.h>
 
 
 __attribute__((unused))
@@ -28,20 +27,11 @@ VOID init_gdt(VOID) {
 
         {0x00, 0x00, 0x00, 0x92, 0xA0, 0x00},    // struct gdt_entry ovmf_ds;
         {0x00, 0x00, 0x00, 0x9A, 0xA0, 0x00},    // struct gdt_entry ovmf_cs;
-
-        {0x00, 0x00, 0x00, 0x89, 0xA0, 0x00},    // struct gdt_entry tss_low;
-        {0x00, 0x00, 0x00, 0x00, 0x00, 0x00},    // struct gdt_entry tss_high;
     };
 
     
-    // init gdt & tss
+    // init gdt
     gdt_desc_t gdt_desc;
-    /*
-    TODO:
-    tss_t tss;
-
-    zero_memory((ADDR*)&tss, sizeof(tss));
-    */
 
     gdt_desc.limit = (UINT16)(sizeof(gdt_t) - 1);    // set size
     gdt_desc.base  = (UINT64)(&gdt);                 // pass populated gdt

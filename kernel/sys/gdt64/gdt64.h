@@ -38,9 +38,6 @@ typedef struct tag_gdt {
 
     gdt_entry_t ovmf_ds;    // 0x30
     gdt_entry_t ovmf_cs;    // 0x38
-
-    gdt_entry_t tss_low;    // 0x40
-    gdt_entry_t tss_high;   // 0x48
 } gdt_t;
 
 

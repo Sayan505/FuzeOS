@@ -24,6 +24,10 @@ void start_kernel(stiletto_t *stiletto) {
     // init video
     init_video(kernel_stiletto.stiletto_video);
 
+    // init interrupts
+    init_interrupts();
+    
+
     clr_scr();  // draw bg
 
 
@@ -68,7 +72,7 @@ void start_kernel(stiletto_t *stiletto) {
     */
 
 
-
+__asm__ volatile("int $0x00");
     __asm__ volatile("cli");
     __asm__ volatile("hlt");
 }

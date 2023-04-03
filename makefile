@@ -107,6 +107,9 @@ CFLAGS =       -target x86_64-unknown-none-elf64                              \
                -Wall                                                          \
                -Wextra                                                        \
                -Werror                                                        \
+               -Wno-unused-but-set-variable                                   \
+               -Wno-unused-parameter                                          \
+               -Wno-unused-variable                                           \
                -Wpedantic                                                     \
                -Wno-gnu-label-as-value                                        \
                -ffreestanding                                                 \
@@ -159,9 +162,9 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd                                             \
                -device VGA,vgamem_mb=64                                       \
                fat:rw:$(FSDIR)/                                               \
                -m $(RAM)                                                      \
-               -display sdl                                                   \
+               -display gtk                                                   \
                -D log.txt                                                     \
-               -smp cpus=4
+               -smp cpus=4 -no-reboot -no-shutdown -M smm=off -d int
 
 # /dev/loop???:
 LOOPDSK := 0

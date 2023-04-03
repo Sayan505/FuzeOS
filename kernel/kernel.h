@@ -8,14 +8,14 @@
 #include <lib/stdlib.h>
 
 
-// GDT
-#include <sys/gdt64/gdt64.h>
-
-
 // boot protocol
 #include <sys/bootprotocol/stiletto.h>
 
 static stiletto_t kernel_stiletto;    // kernel's fork of the boot protocol
+
+
+// GDT
+#include <sys/gdt64/gdt64.h>
 
 
 // serial port
@@ -33,6 +33,10 @@ static stiletto_t kernel_stiletto;    // kernel's fork of the boot protocol
 
 // memory
 //#include <sys/mem/mem.h>
+
+
+// interrupts
+#include <sys/cpu/interrupts/init_interrupts.h>
 
 // CPU
 #include <lib/cpuid.h>
