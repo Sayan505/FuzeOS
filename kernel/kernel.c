@@ -6,7 +6,7 @@
 #include <kernel.h>
 
 
-void start_kernel(stiletto_t *stiletto) {
+VOID start_kernel(stiletto_t *stiletto) {
     // fork it up
     zero_memory(&kernel_stiletto, sizeof(stiletto_t));
     memcpy(&kernel_stiletto, stiletto, sizeof(stiletto_t));
@@ -72,7 +72,6 @@ void start_kernel(stiletto_t *stiletto) {
     */
 
 
-__asm__ volatile("int $0x00");
     __asm__ volatile("cli");
     __asm__ volatile("hlt");
 }

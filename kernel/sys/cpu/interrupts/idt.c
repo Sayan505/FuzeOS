@@ -10,3 +10,5 @@ VOID rig_idt_gate(BYTE number, BYTE seg_sel, BYTE type_attrib, UINT64 handler_of
     idt_desc_entry[number].isr_high = (UINT32)((handler_offset & 0xffffffff00000000) >> 32);
     idt_desc_entry[number].reserved = 0;
 }
+
+// test_int = 0x000000000063347D

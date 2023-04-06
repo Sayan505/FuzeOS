@@ -45,7 +45,7 @@ typedef struct tag_gdt {
 
 extern gdt_t gdt;
 
-extern void LOAD_GDT64(gdt_desc_t* gdt_desc);
+extern VOID LOAD_GDT64(gdt_desc_t* gdt_desc);
 
 VOID init_gdt(VOID);
 

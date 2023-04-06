@@ -6,7 +6,7 @@
 
 
 
-#define UNUSED(__x__) ((void)__x__)
+#define UNUSED(__x__) ((VOID)__x__)
 
 
 // ref: https://github.com/torvalds/linux/blob/master/tools/include/nolibc/nolibc.h AND glibc source

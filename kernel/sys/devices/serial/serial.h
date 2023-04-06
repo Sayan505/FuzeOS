@@ -14,4 +14,8 @@ VOID com1_outs(const char* __strb__); // emit string through COM1
 BYTE com1_inb(VOID);                // listen for bytes through COM1
 
 
+// DEBUGGING THRU COM1
+VOID com1_addr_of_func(UINT64 func);
+
+
 #define reset_com1() init_com1()

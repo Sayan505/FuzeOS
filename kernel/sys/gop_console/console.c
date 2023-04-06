@@ -49,7 +49,7 @@ VOID k_putstr(const CHAR* _str) {
 
 
 // overloads
-void k_putchr_rgb(const CHAR _char, UINT32 _color) {
+VOID k_putchr_rgb(const CHAR _char, UINT32 _color) {
     // CR
     if (_char == '\r') {
         posi_x = 8;
@@ -83,7 +83,7 @@ void k_putchr_rgb(const CHAR _char, UINT32 _color) {
     posi_x += 9;
 }
 
-void k_putstr_rgb(const CHAR* _str, UINT32 _color) {
+VOID k_putstr_rgb(const CHAR* _str, UINT32 _color) {
     while (*_str != '\0') {
         k_putchr_rgb(*_str, _color);
 

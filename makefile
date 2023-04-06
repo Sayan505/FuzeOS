@@ -131,7 +131,7 @@ CFLAGS =       -target x86_64-unknown-none-elf64                              \
                -mno-sse4.2                                                    \
                -mno-80387                                                     \
                -I.                                                            \
-               -Ikernel
+               -Ikernel -g3
 
 LDFLAGS =      -T linker.ld                                                   \
                -no-pie                                                        \
@@ -164,7 +164,7 @@ QEMURUNFLAGS = -bios ovmf/OVMF.fd                                             \
                -m $(RAM)                                                      \
                -display gtk                                                   \
                -D log.txt                                                     \
-               -smp cpus=4 -no-reboot -no-shutdown -M smm=off -d int
+               -smp cpus=4 -no-reboot -no-shutdown -d int
 
 # /dev/loop???:
 LOOPDSK := 0

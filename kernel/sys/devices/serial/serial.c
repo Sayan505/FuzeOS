@@ -50,7 +50,7 @@ VOID serial_str_out(UINT16 port, const char* strb) {
 }
 
 
-/*  external    */
+/*    external    */
 
 
 VOID init_com1(VOID) {
@@ -67,4 +67,14 @@ VOID com1_outs(const char* __strb__) {
 
 BYTE com1_inb(VOID) {
     return serial_char_in(COM1);
+}
+
+
+/*    debugging    */
+VOID com1_addr_of_func(UINT64 func) {
+     while(func) {
+        int d = func % 10;
+        func /= 10;
+        serial_char_out(COM1, d + 48);
+     }
 }
