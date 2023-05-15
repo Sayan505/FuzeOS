@@ -3,7 +3,7 @@
 
 #include <lib/stdtypes.h>
 
-#include <sys/bootprotocol/stiletto_video.h>
+#include <boot/protocol/stiletto_video.h>
 
 
 // instance of the video struct

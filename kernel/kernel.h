@@ -9,7 +9,7 @@
 
 
 // boot protocol
-#include <sys/bootprotocol/stiletto.h>
+#include <boot/protocol/stiletto.h>
 
 static stiletto_t kernel_stiletto;    // kernel's fork of the boot protocol
 
@@ -32,7 +32,7 @@ static stiletto_t kernel_stiletto;    // kernel's fork of the boot protocol
 
 
 // memory
-//#include <sys/mem/mem.h>
+#include <sys/mem/efi/efi_memory_descriptor.h>
 
 
 // interrupts

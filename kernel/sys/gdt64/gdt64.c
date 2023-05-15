@@ -1,17 +1,6 @@
 #include <sys/gdt64/gdt64.h>
 
 
-__attribute__((unused))
-static VOID* zero_memory(VOID *dest, UINT64 n_bytes) {
-	BYTE *p = (BYTE *)dest;
-
-	while (n_bytes--)
-        *(p++) = NULL;
-
-	return dest;
-}
-
-
 VOID init_gdt(VOID) {
     // populate GDT
     __attribute__((aligned(0x1000)))
@@ -30,7 +19,7 @@ VOID init_gdt(VOID) {
         {0x00, 0x00, 0x00, 0x9A, 0xA0, 0x00},    // struct gdt_entry ovmf_cs;
     };
 
-    
+
     // init gdt
     gdt_desc_t gdt_desc;
 

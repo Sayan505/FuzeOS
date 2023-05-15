@@ -48,7 +48,7 @@ BOOTX64.EFI = BootX64.efi
 IMG = OS.img
 
 # disk image size in MiB:
-IMGMB = 64
+IMGMB = 1
 
 # QEMU Memory:
 RAM = 8G

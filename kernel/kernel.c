@@ -26,7 +26,7 @@ VOID start_kernel(stiletto_t *stiletto) {
 
     // init interrupts
     init_interrupts();
-    
+
 
     clr_scr();  // draw bg
 
@@ -71,7 +71,7 @@ VOID start_kernel(stiletto_t *stiletto) {
     k_putstr("\r\n");
     */
 
-
+__asm__("int $0x00");
     __asm__ volatile("cli");
     __asm__ volatile("hlt");
 }
