@@ -5,6 +5,15 @@
 
 #include <kernel.h>
 
+extern VOID init_userspace(ADDR usermode_subroutine, ADDR usermode_stack);
+static UINT64 usermode_stack[1024];
+VOID usermode_subroutine(VOID);
+
+
+VOID usermode_subroutine(VOID) {
+    for(;;);
+}
+
 
 VOID start_kernel(stiletto_t *stiletto) {
     // fork it up
@@ -47,31 +56,8 @@ VOID start_kernel(stiletto_t *stiletto) {
     k_putstr_rgb(get_cpu_vendor_string(), 0xE9D8A6);  // CPUID
 
 
-    /*
-    k_putstr_rgb("CPU: ", 0x00B4D8);
-    k_putstr_rgb(kernel_stiletto.stiletto_dmi.processor.ProcessorVersion, 0xE9D8A6);
-    k_putstr_rgb(" @ ", 0x00B4D8);
-    k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.processor.CurrentSpeed), 0xE9D8A6);
-    k_putstr_rgb(" MHz (", 0x00B4D8);
-    k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.processor.CoreCount), 0xE9D8A6);
-    k_putstr_rgb(" Cores, ", 0x00B4D8);
-    k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.processor.ThreadCount), 0xE9D8A6);
-    k_putstr_rgb(" Threads)  [", 0x00B4D8);
-    k_putstr_rgb(get_cpu_vendor_string(), 0xE9D8A6);  // CPUID
-    k_putstr("]\r\n");
+    //init_userspace((ADDR)usermode_subroutine, (ADDR)&usermode_stack[1023]);    // stack grows downwards in x86/64
 
-    k_putstr_rgb("Memory: ", 0x00B4D8);
-    k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_dmi.memory_b.Size), 0xE9D8A6);
-    k_putstr_rgb(" MiB\r\n", 0xE9D8A6);
-
-    k_putstr_rgb("Terminal: ", 0x00B4D8);
-    k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_video.horiz), 0xE9D8A6);
-    k_putstr_rgb(" x ", 0xE9D8A6);
-    k_putstr_rgb(uint_to_str(kernel_stiletto.stiletto_video.vert), 0xE9D8A6);
-    k_putstr("\r\n");
-    */
-
-__asm__("int $0x00");
     __asm__ volatile("cli");
     __asm__ volatile("hlt");
 }

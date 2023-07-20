@@ -16,11 +16,11 @@ void init_video(stiletto_video_t stiletto_video) {
 
 /*  Operating routines  */
 
-VOID putpixel_routine(UINT32 x, UINT32 y, UINT32 color) {
+__attribute__((no_caller_saved_registers)) VOID putpixel_routine(UINT32 x, UINT32 y, UINT32 color) {
     video.pFrame_buffer_base[y * video.ppsl + x] = color;
 }
 
-VOID clr_scr(VOID) {
+__attribute__((no_caller_saved_registers)) VOID clr_scr(VOID) {
     // draw vertically for the vsync
     for(UINT32 __y__ = 0; __y__ < video.vert; ++__y__) {
         for(UINT32 __x__ = 0; __x__ < video.horiz; ++__x__) {
@@ -29,7 +29,7 @@ VOID clr_scr(VOID) {
     }
 }
 
-VOID fill_scr(UINT32 hex_rgb_color) {
+__attribute__((no_caller_saved_registers)) VOID fill_scr(UINT32 hex_rgb_color) {
     // draw vertically for the vsync
     for(UINT32 __y__ = 0; __y__ < video.vert; ++__y__) {
         for(UINT32 __x__ = 0; __x__ < video.horiz; ++__x__) {

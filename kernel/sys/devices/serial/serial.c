@@ -19,11 +19,11 @@ VOID init_serial(UINT16 port) {
     outb(port + 4, 0x0B);
 }
 
-UINT32 is_serial_bus_clear(UINT16 port) {
+__attribute__((no_caller_saved_registers)) UINT32 is_serial_bus_clear(UINT16 port) {
     return inb(port + 5) & 0x20;
 }
 
-VOID serial_char_out(UINT16 port, char datb) {
+__attribute__((no_caller_saved_registers)) VOID serial_char_out(UINT16 port, char datb) {
     while (is_serial_bus_clear(port) == 0);
 
     outb(port, datb);
@@ -40,7 +40,7 @@ BYTE serial_char_in(UINT16 port) {
 }
 
 
-VOID serial_str_out(UINT16 port, const char* strb) {
+__attribute__((no_caller_saved_registers)) VOID serial_str_out(UINT16 port, const char* strb) {
     int i = 0;
 
     while(*(strb + i)) {
@@ -57,11 +57,11 @@ VOID init_com1(VOID) {
     init_serial(COM1);
 }
 
-VOID com1_outb(char __datb__) {
+__attribute__((no_caller_saved_registers)) VOID com1_outb(char __datb__) {
     serial_char_out(COM1, __datb__);
 }
 
-VOID com1_outs(const char* __strb__) {
+__attribute__((no_caller_saved_registers)) VOID com1_outs(const char* __strb__) {
     serial_str_out(COM1, __strb__);
 }
 
@@ -71,7 +71,7 @@ BYTE com1_inb(VOID) {
 
 
 /*    debugging    */
-VOID com1_addr_of_func(UINT64 func) {
+__attribute__((no_caller_saved_registers)) VOID com1_addr_of_func(UINT64 func) {
      while(func) {
         int d = func % 10;
         func /= 10;

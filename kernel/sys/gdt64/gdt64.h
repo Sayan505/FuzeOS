@@ -14,14 +14,14 @@ typedef struct tag_gdt_desc {
 
 
 typedef struct tag_gdt_entry {
-    UINT16 limit_low_15_0;
-    UINT16 base_low_15_0;
+    UINT16 limit_0_15;
+    UINT16 base_low_16_31;
 
-    UINT8 base_mid_23_16;
-    UINT8 access_byte;
-    UINT8 granularity;
+    UINT8 base_mid_32_39;
+    UINT8 access_byte_40_47;
+    UINT8 granularity____limit_48_51__flags_52_55;
 
-    UINT8 base_high_31_24;
+    UINT8 base_high_56_63;
 } gdt_entry_t;
 
 
@@ -31,13 +31,12 @@ typedef struct tag_gdt {
     gdt_entry_t kernel_cs;  // 0x08 (kernel base selector)
     gdt_entry_t kernel_ds;  // 0x10
 
-    gdt_entry_t user_null;  // user base selector
+    gdt_entry_t user_null;  // 0x18 (user base selector)
+    gdt_entry_t user_ds;    // 0x20
+    gdt_entry_t user_cs;    // 0x28
 
-    gdt_entry_t user_cs;    // 0x20
-    gdt_entry_t user_ds;    // 0x28
-
-    gdt_entry_t ovmf_ds;    // 0x30
-    gdt_entry_t ovmf_cs;    // 0x38
+    gdt_entry_t tss_low;    // 0x30
+    gdt_entry_t tss_high;   // 0x38
 } gdt_t;
 
 
