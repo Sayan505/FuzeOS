@@ -1,5 +1,4 @@
 #include <sys/cpu/interrupts/idt.h>
-
 #include <sys/cpu/interrupts/exceptions/exceptions.h>
 
 #include <lib/serial.h>
@@ -16,6 +15,7 @@ VOID init_interrupts(VOID) {
     idtr.base = (UINT64)&idt_desc_entry;
 
 
+    /*    EXCEPTIONS: https://wiki.osdev.org/Exceptions   */
     rig_idt_gate(0,  KERNEL_CS, IDT_GATE_TYPE_TRAP, (UINT64)division_error);
     rig_idt_gate(1,  KERNEL_CS, IDT_GATE_TYPE_TRAP, (UINT64)debug);
     rig_idt_gate(2,  KERNEL_CS, IDT_GATE_TYPE_TRAP, (UINT64)nmi);
@@ -49,6 +49,9 @@ VOID init_interrupts(VOID) {
     rig_idt_gate(30, KERNEL_CS, IDT_GATE_TYPE_TRAP, (UINT64)security_exception);
     rig_idt_gate(31, KERNEL_CS, IDT_GATE_TYPE_TRAP, (UINT64)reserved_gate3);
 
+    for(int i = 32; i < 256; ++i) {
+        rig_idt_gate(i, KERNEL_CS, IDT_GATE_TYPE_INTERRUPT, (UINT64)dummy_gate);
+    }
 
 
     // load idt reg

@@ -4,6 +4,10 @@
 #include <lib/serial.h>
 
 
+__attribute__((interrupt)) VOID dummy_gate(interrupt_frame_t* interrupt_frame) {
+    return;
+}
+
 __attribute__((interrupt)) VOID division_error(interrupt_frame_t* interrupt_frame) {
     const CHAR* res = "DIVISION ERROR";
     com1_outs(res);

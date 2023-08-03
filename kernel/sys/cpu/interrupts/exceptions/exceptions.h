@@ -6,6 +6,7 @@
 #include <sys/cpu/interrupts/interrupt_frame.h>
 
 
+__attribute__((interrupt)) VOID dummy_gate(interrupt_frame_t* interrupt_frame);
 __attribute__((interrupt)) VOID division_error(interrupt_frame_t* interrupt_frame);
 __attribute__((interrupt)) VOID debug(interrupt_frame_t* interrupt_frame);
 __attribute__((interrupt)) VOID nmi(interrupt_frame_t* interrupt_frame);
