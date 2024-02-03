@@ -1,24 +1,18 @@
 /*
-    The Fuze Kernel
+    The Fuze OS Kernel
 */
 
 
 #include <kernel.h>
-
-extern VOID init_userspace(ADDR usermode_subroutine, ADDR usermode_stack);
-static UINT64 usermode_stack[1024];
-VOID usermode_subroutine(VOID);
-
-
-VOID usermode_subroutine(VOID) {
-    for(;;);
-}
 
 
 VOID start_kernel(stiletto_t *stiletto) {
     // fork it up
     zero_memory(&kernel_stiletto, sizeof(stiletto_t));
     memcpy(&kernel_stiletto, stiletto, sizeof(stiletto_t));
+
+    // init mem
+    //mem_info_t mem_info = init_mem(kernel_stiletto.stiletto_memory);
 
 
     // init gdt

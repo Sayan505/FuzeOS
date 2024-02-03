@@ -16,8 +16,8 @@ typedef struct {
     UINT64               Attribute;
 } EFI_MEMORY_DESCRIPTOR;
 
-extern const CHAR* EFI_MEMORY_TYPE_STRINGS[14];
 
+//extern const CHAR* EFI_MEMORY_TYPE_STRINGS[14];
 /*
 const CHAR* EFI_MEMORY_TYPE_STRINGS[14] = {
     "EfiReservedMemoryType",
@@ -27,7 +27,7 @@ const CHAR* EFI_MEMORY_TYPE_STRINGS[14] = {
     "EfiBootServicesData",
     "EfiRuntimeServicesCode",
     "EfiRuntimeServicesData",
-    "EfiConventionalMemory",
+    "EfiConventionalMemory",    // 7
     "EfiUnusableMemory",
     "EfiACPIReclaimMemory",
     "EfiACPIMemoryNVS",
@@ -36,3 +36,4 @@ const CHAR* EFI_MEMORY_TYPE_STRINGS[14] = {
     "EfiPalCode",
 };
 */
+#define EFI_CONVENTIONAL_MEMORY 7

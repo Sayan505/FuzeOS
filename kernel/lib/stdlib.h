@@ -94,7 +94,7 @@ static INT32 strcmp(const CHAR *str1, const CHAR *str2) {
 }
 
 __attribute__((unused))
-INT32 strncmp(const CHAR *s1, const CHAR *s2, UINT64 n_bytes) {
+static INT32 strncmp(const CHAR *s1, const CHAR *s2, UINT64 n_bytes) {
     UCHAR c1 = '\0';
     UCHAR c2 = '\0';
 
@@ -140,7 +140,7 @@ INT32 strncmp(const CHAR *s1, const CHAR *s2, UINT64 n_bytes) {
 __attribute__((unused))
 static CHAR uint_to_str_buffer[128] = { 0 };
 __attribute__((unused))
-const CHAR* uint_to_str(UINT64 val) {
+static const CHAR* uint_to_str(UINT64 val) {
     UINT8 size = 0, index = 0;
     UINT64 size_test = val;
 
@@ -170,7 +170,7 @@ const CHAR* uint_to_str(UINT64 val) {
 __attribute__((unused))
 static CHAR int_to_str_buffer[128] = { 0 };
 __attribute__((unused))
-const CHAR* int_to_str(INT64 val) {
+static const CHAR* int_to_str(INT64 val) {
     UINT8 size = 0, index = 0, is_negative = 0;
     if (val < 0) {
         is_negative = 1;
