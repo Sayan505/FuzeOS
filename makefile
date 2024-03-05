@@ -110,7 +110,7 @@ CFLAGS =       -target x86_64-unknown-none-elf64                              \
                -Wno-unused-but-set-variable                                   \
                -Wno-unused-parameter                                          \
                -Wno-unused-variable                                           \
-               -Wno-gnu-pointer-arith                                         \
+               -Wno-pointer-arith                                             \
                -Wno-int-conversion                                            \
                -Wno-gnu-label-as-value                                        \
                -ffreestanding                                                 \
